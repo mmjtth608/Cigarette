@@ -1,7 +1,5 @@
 package com.tb.cigarette.activity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,15 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.tb.cigarette.adapter.BaseFragmentAdapter;
-import com.tb.cigarette.db.CigaretteDao;
-import com.tb.cigarette.model.Cigarette;
-import com.tb.cigarette.widget.DirectionalViewPager;
-
-import android.R.integer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
+
+import com.tb.cigarette.adapter.BaseFragmentAdapter;
+import com.tb.cigarette.common.Utility;
+import com.tb.cigarette.db.CigaretteDao;
+import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.widget.DirectionalViewPager;
 
 public class LoadingActivity extends FragmentActivity {
 	private ImageView[] loadingItems;
@@ -39,50 +37,39 @@ public class LoadingActivity extends FragmentActivity {
 		pager = (DirectionalViewPager) findViewById(R.id.vp_loading);
 		pager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),
 				loadingItems));
-		pager.setOrientation(DirectionalViewPager.VERTICAL);
-		// pager.setOrientation(DirectionalViewPager.HORIZONTAL);
-		// InputStream s = getResources().openRawResource(R.raw.ca);
-		// String ssString = readStream(s);
-		// List<Cigarette> list = new LinkedList<Cigarette>();
-		// try {
-		// JSONArray jsonArray = new JSONObject(ssString).getJSONObject(
-		// "alltobacco").getJSONArray("tobacco");
-		// for (int i = 0; i < jsonArray.length(); i++) {
-		// JSONObject jsonObject = jsonArray.getJSONObject(i);
-		// Cigarette cigarette = new Cigarette();
-		// cigarette.setId(Integer.parseInt(jsonObject.getString("-id")));
-		// cigarette.setName(jsonObject.getString("name"));
-		// cigarette.setDangci(jsonObject.getString("dangci"));
-		// cigarette.setPinpai(jsonObject.getString("pinpai"));
-		// cigarette.setChandi(jsonObject.getString("chandi"));
-		// cigarette.setLeixing(jsonObject.getString("leixing"));
-		// cigarette.setGuige(jsonObject.getString("guige"));
-		// cigarette.setShoujia(jsonObject.getString("shoujia"));
-		// cigarette.setChangjia(jsonObject.getString("changjia"));
-		// cigarette.setImg(jsonObject.getString("img"));
-		// list.add(cigarette);
-		// }
-		// } catch (JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// CigaretteDao.getInstance(this).insertCigarettes(list);
+		pager.setOrientation(DirectionalViewPager.VERTICAL);// 设置垂直滑动
+		// pager.setOrientation(DirectionalViewPager.HORIZONTAL);//设置水平滑动
+
 	}
 
-	private String readStream(InputStream is) {
+	// 前期录入数据库数据
+	public void initData() {
+		InputStream s = getResources().openRawResource(R.raw.ca);
+		String ssString = Utility.getInstance().readStream(s);
+		List<Cigarette> list = new LinkedList<Cigarette>();
 		try {
-			ByteArrayOutputStream bo = new ByteArrayOutputStream();
-
-			int i = is.read();
-			while (i != -1) {
-				bo.write(i);
-				i = is.read();
+			JSONArray jsonArray = new JSONObject(ssString).getJSONObject(
+					"alltobacco").getJSONArray("tobacco");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				Cigarette cigarette = new Cigarette();
+				cigarette.setId(Integer.parseInt(jsonObject.getString("-id")));
+				cigarette.setName(jsonObject.getString("name"));
+				cigarette.setDangci(jsonObject.getString("dangci"));
+				cigarette.setPinpai(jsonObject.getString("pinpai"));
+				cigarette.setChandi(jsonObject.getString("chandi"));
+				cigarette.setLeixing(jsonObject.getString("leixing"));
+				cigarette.setGuige(jsonObject.getString("guige"));
+				cigarette.setShoujia(jsonObject.getString("shoujia"));
+				cigarette.setChangjia(jsonObject.getString("changjia"));
+				cigarette.setImg(jsonObject.getString("img"));
+				list.add(cigarette);
 			}
-			return bo.toString();
-		} catch (IOException e) {
-			return "";
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
+		CigaretteDao.getInstance(this).insertCigarettes(list);
 	}
 
 }
