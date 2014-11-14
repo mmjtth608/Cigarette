@@ -470,13 +470,19 @@ public class DirectionalViewPager extends ViewPager {
 
 	@Override
 	public Parcelable onSaveInstanceState() {
-		Parcelable superState = super.onSaveInstanceState();
-		if (superState == null)
+		try {
+
+			Parcelable superState = super.onSaveInstanceState();
+			if (superState == null)
+				return null;
+			SavedState ss = new SavedState(superState);
+			ss.position = mCurItem;
+			ss.adapterState = mAdapter.saveState();
+			return ss;
+		} catch (Exception e) {
+			// TODO: handle exception
 			return null;
-		SavedState ss = new SavedState(superState);
-		ss.position = mCurItem;
-		ss.adapterState = mAdapter.saveState();
-		return ss;
+		}
 	}
 
 	@Override

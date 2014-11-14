@@ -19,7 +19,7 @@ import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.widget.DirectionalViewPager;
 
 public class LoadingActivity extends FragmentActivity {
-	private ImageView[] loadingItems;
+	private int[] loadingItems;
 	private DirectionalViewPager pager;
 
 	@Override
@@ -27,13 +27,13 @@ public class LoadingActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_loading);
 
-		loadingItems = new ImageView[3];
-		for (int i = 0; i < loadingItems.length; i++) {
-			loadingItems[i] = new ImageView(this);
-		}
-		loadingItems[0].setImageResource(R.drawable.loading1);
-		loadingItems[1].setImageResource(R.drawable.loading2);
-		loadingItems[2].setImageResource(R.drawable.loading3);
+		loadingItems = new int[3];
+//		for (int i = 0; i < loadingItems.length; i++) {
+//			loadingItems[i] = new ImageView(this);
+//		}
+		loadingItems[0]=R.drawable.loading1;
+		loadingItems[1]=R.drawable.loading2;
+		loadingItems[2]=R.drawable.loading3;
 		pager = (DirectionalViewPager) findViewById(R.id.vp_loading);
 		pager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),
 				loadingItems));

@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 public final class LoadingFragment extends Fragment {
-	// private static final String KEY_CONTENT = "LoadingFragment:Content";
-	private View mContent;
+	private static final String KEY_CONTENT = "LoadingFragment:Content";
+	private int mContent;
 	private View contentView;
 
-	public static LoadingFragment newInstance(View content) {
+	public static LoadingFragment newInstance(int content) {
 		LoadingFragment fragment = new LoadingFragment();
 		fragment.mContent = content;
 		return fragment;
@@ -26,10 +26,10 @@ public final class LoadingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// if ((savedInstanceState != null)
-		// && savedInstanceState.containsKey(KEY_CONTENT)) {
-		// mContent = savedInstanceState.getString(KEY_CONTENT);
-		// }
+		if ((savedInstanceState != null)
+				&& savedInstanceState.containsKey(KEY_CONTENT)) {
+			mContent = savedInstanceState.getInt(KEY_CONTENT);
+		}
 
 		if (contentView != null) {
 			((ViewGroup) contentView.getParent()).removeView(contentView);
@@ -42,13 +42,25 @@ public final class LoadingFragment extends Fragment {
 				LayoutParams.MATCH_PARENT));
 		layout.setGravity(Gravity.CENTER);
 		// layout.addView(mContent);
-		layout.setBackground(((ImageView) mContent).getDrawable());
+		layout.setBackground(getActivity().getResources().getDrawable(mContent));
 		return contentView;
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// outState.putString(KEY_CONTENT, mContent);
+		outState.putInt(KEY_CONTENT, mContent);
 	}
 }

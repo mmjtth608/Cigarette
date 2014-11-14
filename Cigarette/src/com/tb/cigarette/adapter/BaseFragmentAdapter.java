@@ -8,18 +8,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
 public class BaseFragmentAdapter extends FragmentPagerAdapter {
-	protected View[] loadingViews;
+	protected int[] loadingViews;
 
 	public BaseFragmentAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
-	public BaseFragmentAdapter(FragmentManager fm, View[] loadingViews) {
+	public BaseFragmentAdapter(FragmentManager fm, int[] loadingViews) {
 		super(fm);
 		this.loadingViews = loadingViews;
 	}
 
-	public void setViews(View[] loadingViews) {
+	public void setViews(int[] loadingViews) {
 		this.loadingViews = loadingViews;
 	}
 
