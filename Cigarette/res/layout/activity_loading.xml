@@ -9,4 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <Button
+        android:id="@+id/btn_gotomain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:background="#cf4a43"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="点此进入"
+        android:visibility="gone"
+        android:textColor="@drawable/text_white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
