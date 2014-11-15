@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.tb.cigarette.impl.CigatetteService;
 import com.tb.cigarette.model.Cigarette;
@@ -88,7 +90,36 @@ public class CigaretteDao implements CigatetteService {
 	@Override
 	public ArrayList<Cigarette> loadAllCigarette() {
 		// TODO Auto-generated method stub
+		ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
+		String sql = "select * from " + DbManager.TABLE_CIGARETTE;
+		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();
+		Cursor mCursor = db.rawQuery(sql, null);
+		while (mCursor.moveToNext()) {
+			Cigarette mCigarette = getFromCursor(mCursor);
+			cigarettes.add(mCigarette);
+		}
 		return null;
+	}
+
+	private Cigarette getFromCursor(Cursor cursor) {
+		Cigarette mCigarette = new Cigarette();
+		mCigarette.setId(cursor.getInt(cursor.getColumnIndex(FIELD_ID)));
+		mCigarette.setDangci(cursor.getString(cursor
+				.getColumnIndex(FIELD_DANGCI)));
+		mCigarette.setPinpai(cursor.getString(cursor
+				.getColumnIndex(FIELD_PINPAI)));
+		mCigarette.setChandi(cursor.getString(cursor
+				.getColumnIndex(FIELD_CHANDI)));
+		mCigarette.setLeixing(cursor.getString(cursor
+				.getColumnIndex(FIELD_LEIXING)));
+		mCigarette
+				.setGuige(cursor.getString(cursor.getColumnIndex(FIELD_GUIGE)));
+		mCigarette.setShoujia(cursor.getString(cursor
+				.getColumnIndex(FIELD_SHOUJIA)));
+		mCigarette.setChangjia(cursor.getString(cursor
+				.getColumnIndex(FIELD_CHANGJIA)));
+		mCigarette.setImg(cursor.getString(cursor.getColumnIndex(FIELD_IMG)));
+		return mCigarette;
 	}
 
 	@Override

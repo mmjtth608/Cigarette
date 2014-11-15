@@ -8,15 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.tb.cigarette.adapter.BaseFragmentAdapter;
 import com.tb.cigarette.common.Utility;
@@ -24,7 +24,8 @@ import com.tb.cigarette.db.CigaretteDao;
 import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.widget.DirectionalViewPager;
 
-public class LoadingActivity extends FragmentActivity {
+public class LoadingActivity extends FragmentActivity implements
+		OnClickListener {
 	private int[] loadingItems = { R.drawable.loading1, R.drawable.loading2,
 			R.drawable.loading3 };
 	private DirectionalViewPager pager;
@@ -88,6 +89,7 @@ public class LoadingActivity extends FragmentActivity {
 
 			}
 		});
+		btn_gotomain.setOnClickListener(this);
 	}
 
 	// 前期录入数据库数据
@@ -118,6 +120,23 @@ public class LoadingActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 		CigaretteDao.getInstance(this).insertCigarettes(list);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.btn_gotomain:
+			Intent intent = new Intent();
+			intent.setClass(LoadingActivity.this, MainActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.animation_right_in,
+					R.anim.animation_left_out);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }
