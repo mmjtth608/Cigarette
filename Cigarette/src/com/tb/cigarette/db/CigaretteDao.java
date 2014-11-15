@@ -98,7 +98,7 @@ public class CigaretteDao implements CigatetteService {
 			Cigarette mCigarette = getFromCursor(mCursor);
 			cigarettes.add(mCigarette);
 		}
-		return null;
+		return cigarettes;
 	}
 
 	private Cigarette getFromCursor(Cursor cursor) {
