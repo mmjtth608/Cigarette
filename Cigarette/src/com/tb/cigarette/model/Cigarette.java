@@ -2,20 +2,20 @@ package com.tb.cigarette.model;
 
 public class Cigarette {
 	private int id;// id
-	private String name = null;// 名字
-	private String dangci = null;// 档次
-	private String pinpai = null;// 品牌
-	private String chandi = null;// 产地
-	private String leixing = null;// 类型
-	private String guige = null;// 规格
-	private String shoujia = null;// 售价
-	private String tiaomasmall = null;// 条码
-	private String tiaomabig = null;// 条码
-	private String changjia = null;// 厂家
-	private String img = null;// 图片
-	private int pinpainum;// 品牌名次
-	private int chandinum;// 产地名次
-	private int dangcinum;// 档次名次
+	private String name = null;// 鍚嶅瓧
+	private String dangci = null;// 妗ｆ
+	private String pinpai = null;// 鍝佺墝
+	private String chandi = null;// 浜у湴
+	private String leixing = null;// 绫诲瀷
+	private String guige = null;// 瑙勬牸
+	private String shoujia = null;// 鍞环
+	private String tiaomasmall = null;// 鏉＄爜
+	private String tiaomabig = null;// 鏉＄爜
+	private String changjia = null;// 鍘傚
+	private String img = null;// 鍥剧墖
+	private int pinpainum;// 鍝佺墝鍚嶆
+	private int chandinum;// 浜у湴鍚嶆
+	private int dangcinum;// 妗ｆ鍚嶆
 
 	public int getId() {
 		return id;

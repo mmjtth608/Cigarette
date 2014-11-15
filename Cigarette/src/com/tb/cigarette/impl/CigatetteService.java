@@ -7,56 +7,56 @@ import com.tb.cigarette.model.Cigarette;
 
 public interface CigatetteService {
 	/**
-	 * ²åÈëÒ»ÌõÏãÑÌÊı¾İ
+	 * æ’å…¥ä¸€æ¡é¦™çƒŸæ•°æ®
 	 * 
 	 * @param cigarette
 	 */
 	void insertCigarette(Cigarette cigarette);
 
 	/**
-	 * ²åÈë¶àÌõÏãÑÌÊı¾İ
+	 * æ’å…¥å¤šæ¡é¦™çƒŸæ•°æ®
 	 * 
 	 * @param cigarettes
 	 */
 	void insertCigarettes(List<Cigarette> cigarettes);
 
 	/**
-	 * ¸üĞÂ¸ÃÌõÏãÑÌÊı¾İ
+	 * æ›´æ–°è¯¥æ¡é¦™çƒŸæ•°æ®
 	 * 
 	 * @param cigarette
 	 */
 	void updateCigarette(Cigarette cigarette);
 
 	/**
-	 * É¾³ı¸ÃÌõÏãÑÌÊı¾İ
+	 * åˆ é™¤è¯¥æ¡é¦™çƒŸæ•°æ®
 	 * 
 	 * @param cigarette
 	 */
 	void deleteCigarette(Cigarette cigarette);
 
 	/**
-	 * ¼ÓÔØËùÓĞµÄÏãÑÌ
+	 * åŠ è½½æ‰€æœ‰çš„é¦™çƒŸ
 	 * 
 	 * @return
 	 */
 	ArrayList<Cigarette> loadAllCigarette();
 
 	/**
-	 * ¼ÓÔØÄ³Ò»²úµØµÄÏãÑÌ
+	 * åŠ è½½æŸä¸€äº§åœ°çš„é¦™çƒŸ
 	 * 
 	 * @return
 	 */
 	ArrayList<Cigarette> loadChandiCigarette();
 
 	/**
-	 * ¼ÓÔØÄ³Ò»³§¼ÒµÄÏãÑÌ
+	 * åŠ è½½æŸä¸€å‚å®¶çš„é¦™çƒŸ
 	 * 
 	 * @return
 	 */
 	ArrayList<Cigarette> loadChangjiaCigarette();
 
 	/**
-	 * ¼ÓÔØÄ³¹Ø¼ü×ÖµÄÏãÑÌ
+	 * åŠ è½½æŸå…³é”®å­—çš„é¦™çƒŸ
 	 * 
 	 * @return
 	 */

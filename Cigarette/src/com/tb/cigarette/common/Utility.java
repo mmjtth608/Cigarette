@@ -15,11 +15,11 @@ public class Utility {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷×ª»»×Ö·û´®
+	 * æ ¹æ®æµè½¬æ¢å­—ç¬¦ä¸²
 	 * 
 	 * @param is
-	 *            ÊäÈëÁ÷
-	 * @return ÊäÈëÁ÷×ª»»Íê±ÏµÄ×Ö·û´®
+	 *            è¾“å…¥æµ
+	 * @return è¾“å…¥æµè½¬æ¢å®Œæ¯•çš„å­—ç¬¦ä¸²
 	 */
 	public String readStream(InputStream is) {
 		try {

@@ -12,8 +12,8 @@ import android.os.Environment;
 public class DbManager {
 	public static DbManager dbManager = null;
 	public SQLiteDatabase db = null;
-	public static final String DB_NAME = "cigarette.db";// Êı¾İ¿âÎÄ¼ş
-	public static final String TABLE_CIGARETTE = "cigarette";// ¾°µã±í
+	public static final String DB_NAME = "cigarette.db";// æ•°æ®åº“æ–‡ä»¶
+	public static final String TABLE_CIGARETTE = "cigarette";// æ™¯ç‚¹è¡¨
 
 	public String path = "/data"
 			+ Environment.getDataDirectory().getAbsolutePath() + File.separator
@@ -64,7 +64,7 @@ public class DbManager {
 	}
 
 	/**
-	 * Êı¾İ¿â²Ù×÷Ò»ÌõSQLÓï¾ä
+	 * æ•°æ®åº“æ“ä½œä¸€æ¡SQLè¯­å¥
 	 */
 	public void databaseExeSQL(String sql) {
 		synchronized (db) {

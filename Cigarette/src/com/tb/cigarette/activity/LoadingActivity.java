@@ -29,14 +29,14 @@ public class LoadingActivity extends FragmentActivity {
 			R.drawable.loading3 };
 	private DirectionalViewPager pager;
 	private Button btn_gotomain = null;
-//	private ActionBar actionBar = null;
+	// private ActionBar actionBar = null;
 	TranslateAnimation mShowAction = null;
 	TranslateAnimation mHiddenAction = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		actionBar = this.getActionBar();
+		// actionBar = this.getActionBar();
 		setContentView(R.layout.activity_loading);
 		init();
 		bindEvents();
@@ -71,7 +71,7 @@ public class LoadingActivity extends FragmentActivity {
 					btn_gotomain.startAnimation(mShowAction);
 					btn_gotomain.setVisibility(View.VISIBLE);
 				} else {
-//					btn_gotomain.startAnimation(mHiddenAction);
+					// btn_gotomain.startAnimation(mHiddenAction);
 					btn_gotomain.setVisibility(View.GONE);
 				}
 			}
