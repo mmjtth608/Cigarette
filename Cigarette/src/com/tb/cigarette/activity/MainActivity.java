@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 
 import com.tb.cigarette.common.LogUtil;
 import com.tb.cigarette.fragment.HomeFragment;
+import com.tb.cigarette.fragment.ListHomeFragment;
 import com.tb.cigarette.widget.ResideMenu;
 import com.tb.cigarette.widget.ResideMenuItem;
 
@@ -81,7 +82,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	 */
 	private void initActionbar() {
 		actionBar = getActionBar();
-		actionBar.setTitle("浙江中烟");
+		actionBar.setTitle("浙江中烟产品展示平台");
 		actionBar.setIcon(R.drawable.icon_menu);
 		actionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.actionbar_background));
@@ -136,9 +137,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	};
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View view) {
 		// TODO Auto-generated method stub
+		if (view == itemHome) {
+			changeFragment(new HomeFragment());
+		} else if (view == itemProfile) {
+			changeFragment(new ListHomeFragment());
+		}
 
+		resideMenu.closeMenu();
 	}
 
 	// What good method is to access resideMenu？

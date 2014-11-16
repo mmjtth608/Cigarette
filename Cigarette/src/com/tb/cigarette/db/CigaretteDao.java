@@ -104,6 +104,7 @@ public class CigaretteDao implements CigatetteService {
 	private Cigarette getFromCursor(Cursor cursor) {
 		Cigarette mCigarette = new Cigarette();
 		mCigarette.setId(cursor.getInt(cursor.getColumnIndex(FIELD_ID)));
+		mCigarette.setName(cursor.getString(cursor.getColumnIndex(FIELD_NAME)));
 		mCigarette.setDangci(cursor.getString(cursor
 				.getColumnIndex(FIELD_DANGCI)));
 		mCigarette.setPinpai(cursor.getString(cursor

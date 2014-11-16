@@ -25,7 +25,7 @@ public class ImageDownLoadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	private ImageView imageView;
 	private Context context;
 	private AssetManager assetManager;
-	private int Image_width;// 显示图片的宽度
+	private int Image_width = 80;// 显示图片的宽度
 	private LinearLayout progressbar;
 	private TextView loadtext;
 
@@ -57,12 +57,17 @@ public class ImageDownLoadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	protected Bitmap doInBackground(Void... params) {
 
 		try {
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = false;// 这里只返回bitmap的大小
-			InputStream inputStream = assetManager.open(imagePath);
-			Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null,
-					options);
-			return bitmap;
+			if (BitmapCache.getInstance().getBitmap(imagePath) == null) {
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = false;// 这里只返回bitmap的大小
+				InputStream inputStream = assetManager.open(imagePath);
+				Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null,
+						options);
+				BitmapCache.getInstance().putSoftReference(bitmap, imagePath);
+				return bitmap;
+			} else {
+				return BitmapCache.getInstance().getBitmap(imagePath);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +92,8 @@ public class ImageDownLoadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 			imageView.setLayoutParams(layoutParams);
 			imageView.setImageBitmap(drawable);
 		}
-		if (progressbar.isShown() || loadtext.isShown()) {
+		if (progressbar != null && progressbar.isShown()
+				|| (loadtext != null && loadtext.isShown())) {
 			progressbar.setVisibility(View.GONE);
 			loadtext.setVisibility(View.GONE);
 		}
@@ -97,7 +103,7 @@ public class ImageDownLoadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		if (!loadtext.isShown()) {
+		if (loadtext != null && !loadtext.isShown()) {
 			loadtext.setVisibility(View.VISIBLE);
 		}
 

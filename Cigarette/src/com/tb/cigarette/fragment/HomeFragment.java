@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment implements
 		int imagecount = cigarettes.size();
 		for (int i = current_page * count; i < count * (current_page + 1)
 				&& i < imagecount; i++) {
-			addBitMapToImage(cigarettes.get(i).getImg(), j, i);
+			addBitMapToImage(cigarettes.get(i), j, i);
 			j++;
 			if (j >= column)
 				j = 0;
@@ -172,15 +172,16 @@ public class HomeFragment extends Fragment implements
 	 * @param i
 	 *            图片下标
 	 */
-	private void addBitMapToImage(String imageName, int j, int i) {
-		ImageView imageView = null;
-		if (BitmapCache.getInstance().getBitmap(imageName) == null) {
-			imageView = getImageview(imageName);
-		} else {
-			imageView = BitmapCache.getInstance().getBitmap(imageName);
-		}
-		asyncTask = new ImageDownLoadAsyncTask(getActivity(), imageName,
-				imageView, item_width);
+	private void addBitMapToImage(Cigarette mCigarette, int j, int i) {
+		LinearLayout tagView = (LinearLayout) LayoutInflater
+				.from(getActivity()).inflate(R.layout.item_home, null);
+		TextView tv_name = (TextView) tagView.findViewById(R.id.tv_name);
+		TextView tv_price = (TextView) tagView.findViewById(R.id.tv_price);
+		tv_name.setText(mCigarette.getName());
+		tv_price.setText(mCigarette.getShoujia()+"元/条");
+		ImageView imageView = getImageview(mCigarette.getImg());
+		asyncTask = new ImageDownLoadAsyncTask(getActivity(),
+				mCigarette.getImg(), imageView, item_width);
 
 		asyncTask.setProgressbar(progressbar);
 		asyncTask.setLoadtext(loadtext);
@@ -188,7 +189,9 @@ public class HomeFragment extends Fragment implements
 
 		imageView.setTag(i);
 		// 添加相应view
-		linearLayouts.get(j).addView(imageView);
+		tagView.addView(imageView);
+//		linearLayouts.get(j).addView(imageView);
+		linearLayouts.get(j).addView(tagView);
 
 		imageView.setOnClickListener(new OnClickListener() {
 			@Override

@@ -17,10 +17,10 @@ public class BitmapCache {
 
 	static private BitmapCache cache;
 	// 软引用
-	private HashMap<String, SoftReference<ImageView>> imageCache;
+	private HashMap<String, SoftReference<Bitmap>> imageCache;
 
 	public BitmapCache() {
-		imageCache = new HashMap<String, SoftReference<ImageView>>();
+		imageCache = new HashMap<String, SoftReference<Bitmap>>();
 	}
 
 	/**
@@ -41,10 +41,10 @@ public class BitmapCache {
 	 *            image name
 	 * @return
 	 */
-	public ImageView getBitmap(String key) {
+	public Bitmap getBitmap(String key) {
 		if (imageCache.containsKey(key)) {
-			SoftReference<ImageView> reference = imageCache.get(key);
-			ImageView bitmap = reference.get();
+			SoftReference<Bitmap> reference = imageCache.get(key);
+			Bitmap bitmap = reference.get();
 			if (bitmap != null)
 				return bitmap;
 		}
@@ -58,8 +58,8 @@ public class BitmapCache {
 	 * @param bitmap
 	 * @param key
 	 */
-	public void putSoftReference(ImageView bitmap, String key) {
-		imageCache.put(key, new SoftReference<ImageView>(bitmap));
+	public void putSoftReference(Bitmap bitmap, String key) {
+		imageCache.put(key, new SoftReference<Bitmap>(bitmap));
 
 	}
 
