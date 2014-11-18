@@ -11,24 +11,18 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
-import com.tb.cigarette.adapter.BaseFragmentAdapter;
 import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.db.CigaretteDao;
 import com.tb.cigarette.model.Cigarette;
-import com.tb.cigarette.widget.DirectionalViewPager;
 
 public class LoadingActivity extends FragmentActivity implements
 		OnClickListener {
-	private int[] loadingItems = { R.drawable.loading1, R.drawable.loading2,
-			R.drawable.loading3 };
-	private DirectionalViewPager pager;
 	private Button btn_gotomain = null;
 	// private ActionBar actionBar = null;
 	TranslateAnimation mShowAction = null;
@@ -45,10 +39,6 @@ public class LoadingActivity extends FragmentActivity implements
 
 	private void init() {
 		btn_gotomain = (Button) findViewById(R.id.btn_gotomain);
-		pager = (DirectionalViewPager) findViewById(R.id.vp_loading);
-		pager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),
-				loadingItems));
-		pager.setOrientation(DirectionalViewPager.VERTICAL);// 设置垂直滑动
 		// pager.setOrientation(DirectionalViewPager.HORIZONTAL);//设置水平滑动
 		mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
 				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -63,33 +53,8 @@ public class LoadingActivity extends FragmentActivity implements
 
 	private void bindEvents() {
 		// TODO Auto-generated method stub
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int arg0) {
-				// TODO Auto-generated method stub
-				if (arg0 == loadingItems.length - 1) {
-					btn_gotomain.startAnimation(mShowAction);
-					btn_gotomain.setVisibility(View.VISIBLE);
-				} else {
-					// btn_gotomain.startAnimation(mHiddenAction);
-					btn_gotomain.setVisibility(View.GONE);
-				}
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		btn_gotomain.setOnClickListener(this);
+		btn_gotomain.startAnimation(mShowAction);
 	}
 
 	// 前期录入数据库数据
@@ -128,10 +93,11 @@ public class LoadingActivity extends FragmentActivity implements
 		switch (v.getId()) {
 		case R.id.btn_gotomain:
 			Intent intent = new Intent();
-			intent.setClass(LoadingActivity.this, MainActivity.class);
+			intent.setClass(LoadingActivity.this, HomeActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.animation_right_in,
 					R.anim.animation_left_out);
+			finish();
 			break;
 
 		default:

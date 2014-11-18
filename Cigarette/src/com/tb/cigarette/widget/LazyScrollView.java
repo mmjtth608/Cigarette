@@ -17,9 +17,11 @@ public class LazyScrollView extends ScrollView {
 	public LazyScrollView(Context context) {
 		super(context);
 	}
+
 	public LazyScrollView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
 	public LazyScrollView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}

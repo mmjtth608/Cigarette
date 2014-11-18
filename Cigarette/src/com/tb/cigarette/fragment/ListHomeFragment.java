@@ -1,66 +1,35 @@
 package com.tb.cigarette.fragment;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tb.cigarette.activity.MainActivity;
 import com.tb.cigarette.activity.R;
-import com.tb.cigarette.common.BitmapCache;
-import com.tb.cigarette.common.ImageDownLoadAsyncTask;
 import com.tb.cigarette.common.ImageLoader;
-import com.tb.cigarette.common.LogUtil;
-import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.task.CigaretteLoader;
 import com.tb.cigarette.widget.CircleImageView;
-import com.tb.cigarette.widget.LazyScrollView;
 import com.tb.cigarette.widget.LazyScrollView.OnScrollListener;
-import com.tb.cigarette.widget.ResideMenu;
 
 public class ListHomeFragment extends Fragment implements
 		LoaderCallbacks<ArrayList<Cigarette>>, OnScrollListener {
 
-	private ResideMenu resideMenu;
 	private int LOADER_ID = 1001;
 
 	private View parentView;
-	private AssetManager assetManager;
 
 	// private List<String> image_filenames; // 图片集合
 	ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
 
-	private int current_page = 0;// 页码
-	private int count = 20;// 每页显示的个数
-	private int column = 4;// 显示列数
-
-	private int item_width;// 每一个item的宽度
 	private ListView lView;
 	private ImageLoader imageLoader;
 
@@ -74,16 +43,8 @@ public class ListHomeFragment extends Fragment implements
 
 	private void setUpViews() {
 		lView = (ListView) parentView.findViewById(R.id.lv);
-
-		item_width = getActivity().getWindowManager().getDefaultDisplay()
-				.getWidth()
-				/ column;
 		imageLoader = new ImageLoader(R.drawable.ic_launcher, getActivity(),
 				false);
-		assetManager = getActivity().getAssets();
-
-		MainActivity parentActivity = (MainActivity) getActivity();
-		resideMenu = parentActivity.getResideMenu();
 		reloadData();
 	}
 

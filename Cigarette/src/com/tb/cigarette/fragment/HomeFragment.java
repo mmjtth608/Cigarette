@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment implements
 		LoaderCallbacks<ArrayList<Cigarette>>, OnScrollListener {
 
 	private View parentView;
-	private ResideMenu resideMenu;
+	// private ResideMenu resideMenu;
 	private int LOADER_ID = 1001;
 	private ScrollView lazyScrollView;
 	private LinearLayout waterfall_container;
@@ -127,8 +127,8 @@ public class HomeFragment extends Fragment implements
 		}
 		assetManager = getActivity().getAssets();
 
-		MainActivity parentActivity = (MainActivity) getActivity();
-		resideMenu = parentActivity.getResideMenu();
+		// MainActivity parentActivity = (MainActivity) getActivity();
+		// resideMenu = parentActivity.getResideMenu();
 		reloadData();
 		// 获取图片集合
 		// try {
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment implements
 		TextView tv_name = (TextView) tagView.findViewById(R.id.tv_name);
 		TextView tv_price = (TextView) tagView.findViewById(R.id.tv_price);
 		tv_name.setText(mCigarette.getName());
-		tv_price.setText(mCigarette.getShoujia()+"元/条");
+		tv_price.setText(mCigarette.getShoujia() + "元/条");
 		ImageView imageView = getImageview(mCigarette.getImg());
 		asyncTask = new ImageDownLoadAsyncTask(getActivity(),
 				mCigarette.getImg(), imageView, item_width);
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment implements
 		imageView.setTag(i);
 		// 添加相应view
 		tagView.addView(imageView);
-//		linearLayouts.get(j).addView(imageView);
+		// linearLayouts.get(j).addView(imageView);
 		linearLayouts.get(j).addView(tagView);
 
 		imageView.setOnClickListener(new OnClickListener() {

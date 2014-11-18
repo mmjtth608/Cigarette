@@ -26,6 +26,11 @@
             android:label="@null"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="@null"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
