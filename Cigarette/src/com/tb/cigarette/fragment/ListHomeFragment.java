@@ -2,7 +2,12 @@ package com.tb.cigarette.fragment;
 
 import java.util.ArrayList;
 
+import zrc.widget.SimpleFooter;
+import zrc.widget.SimpleHeader;
+import zrc.widget.ZrcListView;
+import zrc.widget.ZrcListView.OnStartListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -10,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tb.cigarette.activity.R;
@@ -30,8 +34,9 @@ public class ListHomeFragment extends Fragment implements
 	// private List<String> image_filenames; // 图片集合
 	ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
 
-	private ListView lView;
+	private ZrcListView listView;
 	private ImageLoader imageLoader;
+    private Handler handler;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,10 +47,45 @@ public class ListHomeFragment extends Fragment implements
 	}
 
 	private void setUpViews() {
-		lView = (ListView) parentView.findViewById(R.id.lv);
+		listView = (ZrcListView) parentView.findViewById(R.id.lv);
 		imageLoader = new ImageLoader(R.drawable.ic_launcher, getActivity(),
 				false);
-		reloadData();
+        handler = new Handler();
+		// 设置下拉刷新的样式
+		SimpleHeader header = new SimpleHeader(getActivity());
+		header.setTextColor(0xff0066aa);
+		header.setCircleColor(0xff33bbee);
+		listView.setHeadable(header);
+
+		// 设置加载更多的样式
+		SimpleFooter footer = new SimpleFooter(getActivity());
+		footer.setCircleColor(0xff33bbee);
+		listView.setFootable(footer);
+
+		// 设置列表项出现动画
+		listView.setItemAnimForTopIn(R.anim.topitem_in);
+		listView.setItemAnimForBottomIn(R.anim.bottomitem_in);
+
+		// 下拉刷新事件回调
+		listView.setOnRefreshStartListener(new OnStartListener() {
+			@Override
+			public void onStart() {
+				reloadData();
+			}
+		});
+
+		// 加载更多事件回调
+		listView.setOnLoadMoreStartListener(new OnStartListener() {
+			@Override
+			public void onStart() {
+				// loadMore();
+			}
+		});
+		listView.setRefreshSuccess("加载成功");
+		listView.setRefreshFail("加载失败");
+//		listView.stopLoadMore();
+		listView.refresh(); // 主动下拉刷新
+		// reloadData();
 	}
 
 	@Override
@@ -78,24 +118,16 @@ public class ListHomeFragment extends Fragment implements
 			ArrayList<Cigarette> arg1) {
 		// TODO Auto-generated method stub
 		cigarettes = arg1;
-		// ArrayList<Map<String, String>> maps = new ArrayList<Map<String,
-		// String>>();
-		// for (int i = 0; i < arg1.size(); i++) {
-		// Map<String, String> map = new HashMap<String, String>();
-		// map.put("name", arg1.get(i).getName());
-		// map.put("price", arg1.get(i).getShoujia() + "元/条");
-		// map.put("address", arg1.get(i).getChangjia());
-		// maps.add(map);
-		// }
-		// 第一次加载
-		// addImage(current_page, count);
-		// SimpleAdapter mAdapter = new SimpleAdapter(getActivity(), maps,
-		// R.layout.item_list,
-		// new String[] { "name", "price", "address" }, new int[] {
-		// R.id.tv_name, R.id.tv_price, R.id.tv_chandi });
-		MyistAdapter mAdapter = new MyistAdapter();
-		lView.setAdapter(mAdapter);
-
+		
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	MyistAdapter mAdapter = new MyistAdapter();
+        		listView.setAdapter(mAdapter);
+                listView.setRefreshSuccess("加载成功"); // 通知加载成功
+                listView.startLoadMore(); // 开启LoadingMore功能
+            }
+        }, 2 * 1000);
 	}
 
 	@Override
