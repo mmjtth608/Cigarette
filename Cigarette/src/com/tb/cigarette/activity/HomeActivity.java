@@ -23,7 +23,6 @@ import com.tb.cigarette.adapter.ImageAdapter;
 import com.tb.cigarette.common.Callback;
 import com.tb.cigarette.common.Invoker;
 import com.tb.cigarette.common.Util;
-import com.tb.cigarette.fragment.HomeFragment;
 import com.tb.cigarette.fragment.ListHomeFragment;
 import com.tb.cigarette.widget.DragLayout;
 import com.tb.cigarette.widget.DragLayout.DragListener;

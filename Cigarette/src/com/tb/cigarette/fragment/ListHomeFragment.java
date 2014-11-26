@@ -12,9 +12,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tb.cigarette.activity.R;
@@ -36,7 +40,10 @@ public class ListHomeFragment extends Fragment implements
 
 	private ZrcListView listView;
 	private ImageLoader imageLoader;
-    private Handler handler;
+	private Handler handler;
+	private MyistAdapter mAdapter;
+	private EditText et_key;
+	private Button btn_cancle;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,16 +57,16 @@ public class ListHomeFragment extends Fragment implements
 		listView = (ZrcListView) parentView.findViewById(R.id.lv);
 		imageLoader = new ImageLoader(R.drawable.ic_launcher, getActivity(),
 				false);
-        handler = new Handler();
+		handler = new Handler();
 		// 设置下拉刷新的样式
 		SimpleHeader header = new SimpleHeader(getActivity());
-		header.setTextColor(0xff0066aa);
-		header.setCircleColor(0xff33bbee);
+		header.setTextColor(0xffCD2626);
+		header.setCircleColor(0xffCD2626);
 		listView.setHeadable(header);
 
 		// 设置加载更多的样式
 		SimpleFooter footer = new SimpleFooter(getActivity());
-		footer.setCircleColor(0xff33bbee);
+		footer.setCircleColor(0xffCD2626);
 		listView.setFootable(footer);
 
 		// 设置列表项出现动画
@@ -81,11 +88,15 @@ public class ListHomeFragment extends Fragment implements
 				// loadMore();
 			}
 		});
-		listView.setRefreshSuccess("加载成功");
-		listView.setRefreshFail("加载失败");
-//		listView.stopLoadMore();
+		View headerView = LayoutInflater.from(getActivity()).inflate(
+				R.layout.view_searchheader, null);
+		et_key = (EditText) headerView.findViewById(R.id.et_search);
+		btn_cancle = (Button) headerView.findViewById(R.id.ib_search_cancel);
+		listView.addHeaderView(headerView);
+
+		mAdapter = new MyistAdapter();
+		listView.setAdapter(mAdapter);
 		listView.refresh(); // 主动下拉刷新
-		// reloadData();
 	}
 
 	@Override
@@ -104,7 +115,15 @@ public class ListHomeFragment extends Fragment implements
 	}
 
 	private void reloadData() {
-		getLoaderManager().restartLoader(LOADER_ID, null, this);
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				getLoaderManager().restartLoader(LOADER_ID, null,
+						ListHomeFragment.this);
+			}
+		}, 2000);
 	}
 
 	@Override
@@ -117,17 +136,13 @@ public class ListHomeFragment extends Fragment implements
 	public void onLoadFinished(Loader<ArrayList<Cigarette>> arg0,
 			ArrayList<Cigarette> arg1) {
 		// TODO Auto-generated method stub
-		cigarettes = arg1;
-		
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            	MyistAdapter mAdapter = new MyistAdapter();
-        		listView.setAdapter(mAdapter);
-                listView.setRefreshSuccess("加载成功"); // 通知加载成功
-                listView.startLoadMore(); // 开启LoadingMore功能
-            }
-        }, 2 * 1000);
+		if (arg1 != null && arg1.size() > 0) {
+			cigarettes = arg1;
+			mAdapter.notifyDataSetChanged();
+			listView.setRefreshSuccess("加载成功"); // 通知加载成功
+		} else {
+			listView.setRefreshSuccess("加载成功"); // 通知加载成功
+		}
 	}
 
 	@Override
@@ -193,6 +208,18 @@ public class ListHomeFragment extends Fragment implements
 		TextView tv_name;
 		TextView tv_price;
 		TextView tv_address;
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
 	}
 
 }

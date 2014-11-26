@@ -1,6 +1,7 @@
 package com.tb.cigarette.widget;
 
 //来自：http://blog.csdn.net/listening_music/article/details/7192629
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
+@SuppressLint("ClickableViewAccessibility")
 public class LazyScrollView extends ScrollView {
+	@SuppressWarnings("unused")
 	private static final String tag = "LazyScrollView";
 	private Handler handler;
 	private View view;
@@ -35,6 +38,7 @@ public class LazyScrollView extends ScrollView {
 		return super.computeVerticalScrollOffset();
 	}
 
+	@SuppressLint({ "ClickableViewAccessibility", "HandlerLeak" })
 	private void init() {
 		this.setOnTouchListener(onTouchListener);
 		handler = new Handler() {

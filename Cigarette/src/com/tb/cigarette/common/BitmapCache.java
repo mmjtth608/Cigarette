@@ -3,7 +3,6 @@ package com.tb.cigarette.common;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 /***
  * 图片缓存

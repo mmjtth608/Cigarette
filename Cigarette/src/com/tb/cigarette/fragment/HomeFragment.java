@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,17 +24,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tb.cigarette.activity.MainActivity;
 import com.tb.cigarette.activity.R;
-import com.tb.cigarette.common.BitmapCache;
 import com.tb.cigarette.common.ImageDownLoadAsyncTask;
 import com.tb.cigarette.common.LogUtil;
-import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.task.CigaretteLoader;
-import com.tb.cigarette.widget.LazyScrollView;
 import com.tb.cigarette.widget.LazyScrollView.OnScrollListener;
-import com.tb.cigarette.widget.ResideMenu;
 
 public class HomeFragment extends Fragment implements
 		LoaderCallbacks<ArrayList<Cigarette>>, OnScrollListener {
@@ -70,12 +65,14 @@ public class HomeFragment extends Fragment implements
 		return parentView;
 	}
 
+	@SuppressWarnings("deprecation")
 	private void setUpViews() {
 		lazyScrollView = (ScrollView) parentView
 				.findViewById(R.id.waterfall_scroll);
 		// lazyScrollView.getView();
 		// lazyScrollView.setOnScrollListener(this);
 		lazyScrollView.setOnTouchListener(new OnTouchListener() {
+			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
@@ -172,6 +169,7 @@ public class HomeFragment extends Fragment implements
 	 * @param i
 	 *            图片下标
 	 */
+	@SuppressLint("InflateParams")
 	private void addBitMapToImage(Cigarette mCigarette, int j, int i) {
 		LinearLayout tagView = (LinearLayout) LayoutInflater
 				.from(getActivity()).inflate(R.layout.item_home, null);
@@ -213,6 +211,7 @@ public class HomeFragment extends Fragment implements
 		BitmapFactory.Options options = getBitmapBounds(imageName);
 		// 创建显示图片的对象
 		ImageView imageView = new ImageView(getActivity());
+		@SuppressWarnings("deprecation")
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.FILL_PARENT);
 		imageView.setLayoutParams(layoutParams);
@@ -231,6 +230,7 @@ public class HomeFragment extends Fragment implements
 	 * 获取相应图片的 BitmapFactory.Options
 	 */
 	public BitmapFactory.Options getBitmapBounds(String imageName) {
+		@SuppressWarnings("unused")
 		int h, w;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;// 只返回bitmap的大小，可以减少内存使用，防止OOM.

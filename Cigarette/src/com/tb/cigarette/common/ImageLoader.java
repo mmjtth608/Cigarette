@@ -3,11 +3,8 @@ package com.tb.cigarette.common;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -36,13 +33,14 @@ public class ImageLoader {
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	// 线程池
 	ExecutorService executorService;
-	@SuppressWarnings("unused")
 	private Context mContext = null;
 
 	// 当进入listview时默认的图片，可换成你自己的默认图片
 	private int stub_id;
 	private int threadPools = 5;// 线程池数目
+	@SuppressWarnings("unused")
 	private int connectTimeout = 30000;// 连接超时时间
+	@SuppressWarnings("unused")
 	private int readTimeout = 30000;// 读取超时时间
 	private String fileName = "LazyList";
 	private boolean all = false;
@@ -86,6 +84,7 @@ public class ImageLoader {
 
 		// 最后从指定的url中下载图片
 		try {
+			@SuppressWarnings("unused")
 			Bitmap bitmap = null;
 			// URL imageUrl = new URL(url);
 			// HttpURLConnection conn = (HttpURLConnection) imageUrl

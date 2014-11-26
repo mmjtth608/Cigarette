@@ -27,6 +27,7 @@ public class ItemsAdapter extends ArrayAdapter<Integer> {
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 
+		@SuppressWarnings("deprecation")
 		float width = ((Activity) context).getWindowManager()
 				.getDefaultDisplay().getWidth();
 		float margin = (int) convertDpToPixel(10f, (Activity) context);

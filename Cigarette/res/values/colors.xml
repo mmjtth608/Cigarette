@@ -3,5 +3,16 @@
 
     <color name="actionbar_background_start">#CD2626</color>
     <color name="actionbar_background_end">#EB1818</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="purple">#9933FF</color>
+    <color name="red">#CD2626</color>
+    <color name="blue">#00FFFF</color>
+    <color name="green">#FF22A63B</color>
+    <color name="lightgray">#e7e7e7</color>
+    <color name="darkorange">#cc2303</color>
+    <color name="darkblue">#FF005799</color>
+    <color name="gray">#AFAFAF</color>
+    <color name="yellow">#F99503</color>
 
 </resources>
