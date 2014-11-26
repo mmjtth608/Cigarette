@@ -2,6 +2,7 @@ package com.tb.cigarette.activity;
 
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,9 @@ import com.tb.cigarette.common.Util;
 import com.tb.cigarette.fragment.ListHomeFragment;
 import com.tb.cigarette.widget.DragLayout;
 import com.tb.cigarette.widget.DragLayout.DragListener;
+import com.tb.cigarette.widget.DragLayout.DragStatus;
 
+@SuppressLint("NewApi")
 public class HomeActivity extends FragmentActivity {
 
 	private DragLayout dl;
@@ -64,7 +67,7 @@ public class HomeActivity extends FragmentActivity {
 		actionBar.setIcon(R.drawable.icon_menu);
 		actionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.actionbar_background));
-		// actionBar.setHomeButtonEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 	}
 
 	private void initDragLayout() {
@@ -87,24 +90,18 @@ public class HomeActivity extends FragmentActivity {
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			dl.open();
-			return false;
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// // TODO Auto-generated method stub
+	// switch (item.getItemId()) {
+	// case android.R.id.home:
+	// dl.open();
+	// return false;
+	// default:
+	// break;
+	// }
+	// return super.onOptionsItemSelected(item);
+	// }
 
 	private void initView() {
 		iv_bottom = (ImageView) findViewById(R.id.iv_bottom);
@@ -191,4 +188,25 @@ public class HomeActivity extends FragmentActivity {
 		// R.anim.shake));
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_main_sort, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			if (dl.getStatus() == DragStatus.Open) {
+				dl.close();
+			} else if (dl.getStatus() == DragStatus.Close) {
+				dl.open();
+			}
+			break;
+		default:
+			break;
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
 }

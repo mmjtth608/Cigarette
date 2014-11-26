@@ -15,11 +15,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tb.cigarette.activity.R;
 import com.tb.cigarette.common.ImageLoader;
@@ -171,7 +174,7 @@ public class ListHomeFragment extends Fragment implements
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			ViewHolder viewholder = null;
 			if (convertView == null) {
@@ -187,17 +190,37 @@ public class ListHomeFragment extends Fragment implements
 						.findViewById(R.id.tv_price);
 				viewholder.tv_address = (TextView) convertView
 						.findViewById(R.id.tv_chandi);
+				viewholder.target_attent = (ImageView) convertView
+						.findViewById(R.id.target_attent);
 				convertView.setTag(viewholder);
 			} else {
 				viewholder = (ViewHolder) convertView.getTag();
 			}
 			viewholder.tv_name.setText(cigarettes.get(position).getName());
-			viewholder.tv_price.setText(cigarettes.get(position).getShoujia()
-					+ "元/条");
-			viewholder.tv_address.setText(cigarettes.get(position)
-					.getChangjia());
+			viewholder.tv_price.setText("价格："
+					+ cigarettes.get(position).getShoujia() + "元/条");
+			viewholder.tv_address.setText("厂家："
+					+ cigarettes.get(position).getChangjia());
+			viewholder.target_attent.setImageDrawable(cigarettes.get(position)
+					.getShare() == 0 ? getActivity().getResources()
+					.getDrawable(R.drawable.ic_menu_target_list_attent)
+					: getActivity().getResources().getDrawable(
+							R.drawable.ic_menu_target_list_attent));
 			imageLoader.DisplayImage(cigarettes.get(position).getImg(),
 					viewholder.icon_img);
+			viewholder.target_attent.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(cigarettes.get(position).getShare()==0){
+						cigarettes.get(position).setShare(1);
+					}else {
+						cigarettes.get(position).setShare(0);
+					}
+					notifyDataSetChanged();
+				}
+			});
 			return convertView;
 		}
 
@@ -208,6 +231,7 @@ public class ListHomeFragment extends Fragment implements
 		TextView tv_name;
 		TextView tv_price;
 		TextView tv_address;
+		ImageView target_attent;
 	}
 
 	@Override
