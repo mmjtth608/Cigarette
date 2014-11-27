@@ -3,6 +3,7 @@ package com.tb.cigarette.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +26,7 @@ public class CigaretteDao implements CigatetteService {
 	private static String FIELD_SHOUJIA = "shoujia";
 	private static String FIELD_CHANGJIA = "changjia";
 	private static String FIELD_IMG = "img";
+	private static String FIELD_SHARE = "share";
 
 	CigaretteDao(Context mContext) {
 		this.mContext = mContext;
@@ -73,10 +75,17 @@ public class CigaretteDao implements CigatetteService {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void updateCigarette(Cigarette cigarette) {
 		// TODO Auto-generated method stub
+		// String sql = "update from " + DbManager.TABLE_CIGARETTE + " where "
+		// + FIELD_ID + " = " + cigarette.getId();
+		// dbManager.databaseExeSQL(sql);
 
+		ContentValues values = getContentValues(cigarette);
+		dbManager.getDbManager(mContext).db.update(DbManager.TABLE_CIGARETTE,
+				values, FIELD_ID + "='" + cigarette.getId() + "'", null);
 	}
 
 	@Override
@@ -85,6 +94,21 @@ public class CigaretteDao implements CigatetteService {
 		String sql = "delete from " + DbManager.TABLE_CIGARETTE + " where "
 				+ FIELD_ID + " = " + cigarette.getId();
 		dbManager.databaseExeSQL(sql);
+	}
+
+	private ContentValues getContentValues(Cigarette cigarette) {
+		ContentValues values = new ContentValues();
+		values.put(FIELD_CHANDI, cigarette.getChandi());
+		values.put(FIELD_NAME, cigarette.getName());
+		values.put(FIELD_CHANGJIA, cigarette.getChangjia());
+		values.put(FIELD_DANGCI, cigarette.getDangci());
+		values.put(FIELD_GUIGE, cigarette.getGuige());
+		values.put(FIELD_IMG, cigarette.getImg());
+		values.put(FIELD_LEIXING, cigarette.getLeixing());
+		values.put(FIELD_PINPAI, cigarette.getPinpai());
+		values.put(FIELD_SHARE, cigarette.getShare());
+		values.put(FIELD_SHOUJIA, cigarette.getShoujia());
+		return values;
 	}
 
 	@Override
@@ -120,6 +144,7 @@ public class CigaretteDao implements CigatetteService {
 		mCigarette.setChangjia(cursor.getString(cursor
 				.getColumnIndex(FIELD_CHANGJIA)));
 		mCigarette.setImg(cursor.getString(cursor.getColumnIndex(FIELD_IMG)));
+		mCigarette.setShare(cursor.getInt(cursor.getColumnIndex(FIELD_SHARE)));
 		return mCigarette;
 	}
 

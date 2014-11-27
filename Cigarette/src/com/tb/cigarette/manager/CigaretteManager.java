@@ -30,4 +30,8 @@ public class CigaretteManager {
 		return mCigaretteDao.loadAllCigarette();
 	}
 
+	public void updateCigarette(Cigarette cigarette) {
+		mCigaretteDao.updateCigarette(cigarette);
+	}
+
 }

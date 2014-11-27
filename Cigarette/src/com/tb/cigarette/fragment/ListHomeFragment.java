@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.tb.cigarette.activity.R;
 import com.tb.cigarette.common.ImageLoader;
+import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.task.CigaretteLoader;
 import com.tb.cigarette.widget.CircleImageView;
@@ -47,6 +48,7 @@ public class ListHomeFragment extends Fragment implements
 	private MyistAdapter mAdapter;
 	private EditText et_key;
 	private Button btn_cancle;
+	private CigaretteManager mCigaretteManager = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +59,7 @@ public class ListHomeFragment extends Fragment implements
 	}
 
 	private void setUpViews() {
+		mCigaretteManager = CigaretteManager.getInstance(getActivity());
 		listView = (ZrcListView) parentView.findViewById(R.id.lv);
 		imageLoader = new ImageLoader(R.drawable.ic_launcher, getActivity(),
 				false);
@@ -174,7 +177,8 @@ public class ListHomeFragment extends Fragment implements
 		}
 
 		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
 			// TODO Auto-generated method stub
 			ViewHolder viewholder = null;
 			if (convertView == null) {
@@ -205,19 +209,20 @@ public class ListHomeFragment extends Fragment implements
 					.getShare() == 0 ? getActivity().getResources()
 					.getDrawable(R.drawable.ic_menu_target_list_attent)
 					: getActivity().getResources().getDrawable(
-							R.drawable.ic_menu_target_list_attent));
+							R.drawable.ic_menu_target_list_attent_click));
 			imageLoader.DisplayImage(cigarettes.get(position).getImg(),
 					viewholder.icon_img);
 			viewholder.target_attent.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					if(cigarettes.get(position).getShare()==0){
+					if (cigarettes.get(position).getShare() == 0) {
 						cigarettes.get(position).setShare(1);
-					}else {
+					} else {
 						cigarettes.get(position).setShare(0);
 					}
+					mCigaretteManager.updateCigarette(cigarettes.get(position));
 					notifyDataSetChanged();
 				}
 			});
