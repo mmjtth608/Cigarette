@@ -1,5 +1,6 @@
 package com.tb.cigarette.activity;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +19,14 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
+import com.baidu.frontia.Frontia;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.db.CigaretteDao;
 import com.tb.cigarette.model.Cigarette;
@@ -34,6 +44,12 @@ public class LoadingActivity extends FragmentActivity implements
 		// actionBar = this.getActionBar();
 		setContentView(R.layout.activity_loading);
 		init();
+		initImageLoader(this);
+		boolean isInit = Frontia.init(getApplicationContext(),
+				"qavMGEsGGe0OaS68cSdUxCCI");
+		if (isInit) {// Frontia is successfully initialized.
+			// Use Frontia
+		}
 		bindEvents();
 	}
 
@@ -103,6 +119,32 @@ public class LoadingActivity extends FragmentActivity implements
 		default:
 			break;
 		}
+	}
+
+	public static void initImageLoader(Context context) {
+		// This configuration tuning is custom. You can tune every option, you
+		// may tune some of them,
+		// or you can create default configuration by
+		// ImageLoaderConfiguration.createDefault(this);
+		// method.
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+				context)
+				.threadPriority(Thread.NORM_PRIORITY - 2)
+				.denyCacheImageMultipleSizesInMemory()
+				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+				.tasksProcessingOrder(QueueProcessingType.LIFO)
+				// .enableLogging()
+				.imageDownloader(new BaseImageDownloader(context))
+				// default
+				.imageDecoder(new BaseImageDecoder(true))
+				.memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+				.threadPoolSize(1)
+				// .discCache(
+				// new UnlimitedDiscCache(new File(FileUtils
+				// .getImagesPath())))// default
+				.build();
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);
 	}
 
 }

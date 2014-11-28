@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:paddingBottom="30dp"
         android:paddingLeft="30dp"
-        android:paddingTop="50dp" >
+        android:paddingTop="30dp" >
 
         <LinearLayout
             android:id="@+id/ll1"
@@ -25,11 +25,13 @@
                 android:src="@drawable/ic_launcher" />
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:text="TangBin"
+                android:tag="false"
+                android:text="未登陆[Login]"
                 android:textColor="#ffffff"
                 android:textSize="25sp" />
         </LinearLayout>
