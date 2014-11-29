@@ -3,10 +3,12 @@ package com.tb.cigarette.task;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 
 public class CigaretteLoader extends AsyncTaskLoader<ArrayList<Cigarette>> {
 
@@ -14,17 +16,30 @@ public class CigaretteLoader extends AsyncTaskLoader<ArrayList<Cigarette>> {
 	private Context mContext;
 	private CigaretteManager mCigaretteManager = null;
 	private ArrayList<Cigarette> mData = null;
+	private Bundle bundle = null;
 
-	public CigaretteLoader(Context mContext) {
+	public CigaretteLoader(Context mContext, Bundle bundle) {
 		super(mContext);
 		this.mContext = mContext;
+		this.bundle = bundle;
 		mCigaretteManager = CigaretteManager.getInstance(mContext);
 	}
 
 	@Override
 	public ArrayList<Cigarette> loadInBackground() {
 		ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
-		cigarettes = mCigaretteManager.loadAllCigarette();
+		if (bundle == null) {
+			cigarettes = mCigaretteManager.loadAllCigarette();
+		} else {
+			SearchParams searchParams = (SearchParams) bundle
+					.getSerializable("search");
+			if (searchParams != null) {
+				cigarettes = mCigaretteManager
+						.loadSearchCigarette(searchParams);
+			} else {
+				cigarettes = mCigaretteManager.loadAllCigarette();
+			}
+		}
 		return cigarettes;
 	}
 

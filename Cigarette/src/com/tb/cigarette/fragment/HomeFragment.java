@@ -267,7 +267,7 @@ public class HomeFragment extends Fragment implements
 	@Override
 	public Loader<ArrayList<Cigarette>> onCreateLoader(int arg0, Bundle arg1) {
 		// TODO Auto-generated method stub
-		return new CigaretteLoader(getActivity());
+		return new CigaretteLoader(getActivity(), null);
 	}
 
 	@Override

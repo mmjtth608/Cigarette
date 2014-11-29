@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.tb.cigarette.db.CigaretteDao;
 import com.tb.cigarette.impl.CigatetteService;
 import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 
 import android.content.Context;
 
@@ -32,6 +33,22 @@ public class CigaretteManager {
 
 	public void updateCigarette(Cigarette cigarette) {
 		mCigaretteDao.updateCigarette(cigarette);
+	}
+
+	public ArrayList<String> loadPinpai() {
+		return mCigaretteDao.loadPinpai();
+	}
+
+	public ArrayList<String> loadDangci() {
+		return mCigaretteDao.loadDangci();
+	}
+
+	public ArrayList<String> loadChandi() {
+		return mCigaretteDao.loadChandi();
+	}
+
+	public ArrayList<Cigarette> loadSearchCigarette(SearchParams searchParams) {
+		return mCigaretteDao.loadSearchCigarette(searchParams);
 	}
 
 }

@@ -28,6 +28,7 @@ import com.tb.cigarette.activity.R;
 import com.tb.cigarette.common.ImageLoader;
 import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 import com.tb.cigarette.task.CigaretteLoader;
 import com.tb.cigarette.widget.CircleImageView;
 import com.tb.cigarette.widget.LazyScrollView.OnScrollListener;
@@ -49,6 +50,7 @@ public class ListHomeFragment extends Fragment implements
 	private EditText et_key;
 	private Button btn_cancle;
 	private CigaretteManager mCigaretteManager = null;
+	private SearchParams searchParams = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +85,7 @@ public class ListHomeFragment extends Fragment implements
 		listView.setOnRefreshStartListener(new OnStartListener() {
 			@Override
 			public void onStart() {
-				reloadData();
+				reloadData(searchParams);
 			}
 		});
 
@@ -120,13 +122,20 @@ public class ListHomeFragment extends Fragment implements
 
 	}
 
-	private void reloadData() {
+	public void getDataBySearch(SearchParams searchParams) {
+		this.searchParams = searchParams;
+		listView.refresh();
+	}
+
+	public void reloadData(final SearchParams searchParams) {
 		handler.postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				getLoaderManager().restartLoader(LOADER_ID, null,
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("search", searchParams);
+				getLoaderManager().restartLoader(LOADER_ID, bundle,
 						ListHomeFragment.this);
 			}
 		}, 2000);
@@ -135,7 +144,7 @@ public class ListHomeFragment extends Fragment implements
 	@Override
 	public Loader<ArrayList<Cigarette>> onCreateLoader(int arg0, Bundle arg1) {
 		// TODO Auto-generated method stub
-		return new CigaretteLoader(getActivity());
+		return new CigaretteLoader(getActivity(), arg1);
 	}
 
 	@Override
@@ -147,7 +156,7 @@ public class ListHomeFragment extends Fragment implements
 			mAdapter.notifyDataSetChanged();
 			listView.setRefreshSuccess("加载成功"); // 通知加载成功
 		} else {
-			listView.setRefreshSuccess("加载成功"); // 通知加载成功
+			listView.setRefreshSuccess("加载失败"); // 通知加载成功
 		}
 	}
 

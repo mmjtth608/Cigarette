@@ -25,6 +25,8 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,12 +51,16 @@ import com.tb.cigarette.common.Invoker;
 import com.tb.cigarette.common.Util;
 import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.fragment.ListHomeFragment;
+import com.tb.cigarette.manager.CigaretteManager;
+import com.tb.cigarette.model.SearchParams;
 import com.tb.cigarette.widget.DragLayout;
 import com.tb.cigarette.widget.DragLayout.DragListener;
 import com.tb.cigarette.widget.DragLayout.DragStatus;
+import com.tb.cigarette.widget.SegmentedRadioGroup;
 
 @SuppressLint("NewApi")
-public class HomeActivity extends FragmentActivity {
+public class HomeActivity extends FragmentActivity implements
+		OnCheckedChangeListener {
 
 	private DragLayout dl;
 	private GridView gv_img;
@@ -74,6 +80,11 @@ public class HomeActivity extends FragmentActivity {
 	private final static String Scope_Basic = "basic";
 	private final static String Scope_Netdisk = "netdisk";
 	private boolean isFirst = true;
+	private SegmentedRadioGroup segmentText;
+	private ArrayList<String> filterList = new ArrayList<String>();
+	private CigaretteManager mCigaretteManager = null;
+	private ArrayAdapter<String> mAdapter;
+	private SearchParams searchParams = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +103,7 @@ public class HomeActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		imageLoader = ImageLoader.getInstance();
 		options = Utility.getUserIconDisplayOption();
+		mCigaretteManager = CigaretteManager.getInstance(this);
 		animateFirstListener = new AnimateFirstDisplayListener();
 		mAuthorization = Frontia.getAuthorization();
 		mSocialShare = Frontia.getSocialShare();
@@ -105,6 +117,12 @@ public class HomeActivity extends FragmentActivity {
 		mImageContent
 				.setImageUri(Uri
 						.parse("http://zjgy.tobacco.com.cn/np_application/zjzy/waiwang/images/index_02.jpg"));
+		filterList = mCigaretteManager.loadPinpai();
+		segmentText.setTag(0);
+		mAdapter = new ArrayAdapter<String>(HomeActivity.this,
+				R.layout.item_text, filterList);
+		lv.setAdapter(mAdapter);
+		searchParams = new SearchParams();
 	}
 
 	/**
@@ -133,6 +151,10 @@ public class HomeActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * 
+	 * @param targetFragment
+	 */
 	private void changeFragment(Fragment targetFragment) {
 		getSupportFragmentManager()
 				.beginTransaction()
@@ -157,7 +179,7 @@ public class HomeActivity extends FragmentActivity {
 		dl.setDragListener(new DragListener() {
 			@Override
 			public void onOpen() {
-				lv.smoothScrollToPosition(new Random().nextInt(30));
+				// lv.smoothScrollToPosition(new Random().nextInt(30));
 			}
 
 			@Override
@@ -187,6 +209,8 @@ public class HomeActivity extends FragmentActivity {
 
 	private void initView() {
 		tv_name = (TextView) findViewById(R.id.tv_name);
+		segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
+		segmentText.setOnCheckedChangeListener(this);
 		tv_name.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -212,21 +236,31 @@ public class HomeActivity extends FragmentActivity {
 		// }
 		// });
 		lv = (ListView) findViewById(R.id.lv);
-		lv.setAdapter(new ArrayAdapter<String>(HomeActivity.this,
-				R.layout.item_text, new String[] { "NewBee", "ViCi Gaming",
-						"Evil Geniuses", "Team DK", "Invictus Gaming", "LGD",
-						"Natus Vincere", "Team Empire", "Alliance", "Cloud9",
-						"Titan", "Mousesports", "Fnatic", "Team Liquid",
-						"MVP Phoenix", "NewBee", "ViCi Gaming",
-						"Evil Geniuses", "Team DK", "Invictus Gaming", "LGD",
-						"Natus Vincere", "Team Empire", "Alliance", "Cloud9",
-						"Titan", "Mousesports", "Fnatic", "Team Liquid",
-						"MVP Phoenix" }));
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Util.t(getApplicationContext(), "click " + position);
+				// Util.t(getApplicationContext(), "click " + position);
+				searchParams.clearParams();
+				switch (Integer.parseInt(segmentText.getTag().toString())) {
+				case 0:
+					searchParams.setPinpai(mAdapter.getItem(position));
+					break;
+				case 1:
+					searchParams.setDangci(mAdapter.getItem(position));
+					break;
+				case 2:
+					searchParams.setChandi(mAdapter.getItem(position));
+					break;
+
+				default:
+					break;
+				}
+				dl.close();
+				((ListHomeFragment) (getSupportFragmentManager()
+						.findFragmentByTag(ListHomeFragment.class
+								.getSimpleName())))
+						.getDataBySearch(searchParams);
 			}
 		});
 		// iv_icon.setOnClickListener(new OnClickListener() {
@@ -308,6 +342,11 @@ public class HomeActivity extends FragmentActivity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
+	/**
+	 * 
+	 * @author Administrator
+	 * 
+	 */
 	private class ShareListener implements FrontiaSocialShareListener {
 
 		@Override
@@ -326,6 +365,9 @@ public class HomeActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+ * 
+ */
 	protected void startBaidu() {
 		ArrayList<String> scope = new ArrayList<String>();
 		scope.add(Scope_Basic);
@@ -361,11 +403,18 @@ public class HomeActivity extends FragmentActivity {
 				});
 	}
 
+	/**
+ * 
+ */
 	protected void startBaiduUserInfo() {
 		userinfo(MediaType.BAIDU.toString());
 
 	}
 
+	/**
+	 * 
+	 * @param accessToken
+	 */
 	private void userinfo(String accessToken) {
 		mAuthorization.getUserInfo(accessToken, new UserInfoListener() {
 
@@ -395,6 +444,9 @@ public class HomeActivity extends FragmentActivity {
 		});
 	}
 
+	/**
+ * 
+ */
 	protected void startBaiduStatus() {
 		boolean result = mAuthorization
 				.isAuthorizationReady(FrontiaAuthorization.MediaType.BAIDU
@@ -414,5 +466,25 @@ public class HomeActivity extends FragmentActivity {
 			}
 		}
 		isFirst = false;
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		// TODO Auto-generated method stub
+		if (group == segmentText) {
+			mAdapter.clear();
+			if (checkedId == R.id.button_one) {
+				segmentText.setTag(0);
+				filterList = mCigaretteManager.loadPinpai();
+			} else if (checkedId == R.id.button_two) {
+				filterList = mCigaretteManager.loadDangci();
+				segmentText.setTag(1);
+			} else if (checkedId == R.id.button_three) {
+				filterList = mCigaretteManager.loadChandi();
+				segmentText.setTag(2);
+			}
+			mAdapter.addAll(filterList);
+			mAdapter.notifyDataSetChanged();
+		}
 	}
 }

@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:tag="false"
-                android:text="未登陆[Login]"
+                android:text="未登陆 "
                 android:textColor="#ffffff"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -45,14 +45,54 @@
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
+        <com.tb.cigarette.widget.SegmentedRadioGroup
+            android:id="@+id/segment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll1"
+            android:layout_marginTop="25dp"
+            android:checkedButton="@+id/button_one"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@id/button_one"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="45dip"
+                android:text=" 按品牌 "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/button_two"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="45dip"
+                android:text=" 按档次 "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/button_three"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="45dip"
+                android:text=" 按产地 "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+        </com.tb.cigarette.widget.SegmentedRadioGroup>
+
         <ListView
             android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_mail"
-            android:layout_below="@id/ll1"
+            android:layout_below="@id/segment_text"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:cacheColorHint="#00000000"
             android:divider="@null"
             android:textColor="#ffffff" />

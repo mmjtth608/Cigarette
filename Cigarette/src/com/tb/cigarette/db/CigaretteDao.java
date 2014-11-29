@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.tb.cigarette.impl.CigatetteService;
 import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 import com.tb.cigarette.manager.DbManager;
 
 public class CigaretteDao implements CigatetteService {
@@ -164,6 +165,74 @@ public class CigaretteDao implements CigatetteService {
 	public ArrayList<Cigarette> loadKeyCigarette(String key) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ArrayList<String> loadPinpai() {
+		ArrayList<String> cigarettes = new ArrayList<String>();
+		String sql = "select DISTINCT " + FIELD_PINPAI + " from "
+				+ DbManager.TABLE_CIGARETTE;
+		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();
+		Cursor mCursor = db.rawQuery(sql, null);
+		while (mCursor.moveToNext()) {
+			cigarettes.add(mCursor.getString(mCursor
+					.getColumnIndex(FIELD_PINPAI)));
+		}
+		return cigarettes;
+	}
+
+	@Override
+	public ArrayList<String> loadDangci() {
+		ArrayList<String> cigarettes = new ArrayList<String>();
+		String sql = "select DISTINCT " + FIELD_DANGCI + " from "
+				+ DbManager.TABLE_CIGARETTE;
+		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();
+		Cursor mCursor = db.rawQuery(sql, null);
+		while (mCursor.moveToNext()) {
+			cigarettes.add(mCursor.getString(mCursor
+					.getColumnIndex(FIELD_DANGCI)));
+		}
+		return cigarettes;
+	}
+
+	@Override
+	public ArrayList<String> loadChandi() {
+		ArrayList<String> cigarettes = new ArrayList<String>();
+		String sql = "select DISTINCT " + FIELD_CHANDI + " from "
+				+ DbManager.TABLE_CIGARETTE;
+		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();
+		Cursor mCursor = db.rawQuery(sql, null);
+		while (mCursor.moveToNext()) {
+			cigarettes.add(mCursor.getString(mCursor
+					.getColumnIndex(FIELD_CHANDI)));
+		}
+		return cigarettes;
+	}
+
+	@Override
+	public ArrayList<Cigarette> loadSearchCigarette(SearchParams searchParams) {
+		// TODO Auto-generated method stub
+		String sql = "select * from " + DbManager.TABLE_CIGARETTE;
+		if (searchParams.getKey() != null) {
+			sql = "select * from " + DbManager.TABLE_CIGARETTE;
+		} else if (searchParams.getPinpai() != null) {
+			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
+					+ FIELD_PINPAI + " = \'" + searchParams.getPinpai() + "\'";
+		} else if (searchParams.getDangci() != null) {
+			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
+					+ FIELD_DANGCI + " = \'" + searchParams.getDangci() + "\'";
+		} else if (searchParams.getChandi() != null) {
+			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
+					+ FIELD_CHANDI + " = \'" + searchParams.getChandi() + "\'";
+		}
+		ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
+		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();
+		Cursor mCursor = db.rawQuery(sql, null);
+		while (mCursor.moveToNext()) {
+			Cigarette mCigarette = getFromCursor(mCursor);
+			cigarettes.add(mCigarette);
+		}
+		return cigarettes;
 	}
 
 }

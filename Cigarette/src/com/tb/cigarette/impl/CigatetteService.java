@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 
 public interface CigatetteService {
 	/**
@@ -61,4 +62,12 @@ public interface CigatetteService {
 	 * @return
 	 */
 	ArrayList<Cigarette> loadKeyCigarette(String key);
+
+	ArrayList<String> loadPinpai();
+
+	ArrayList<String> loadDangci();
+
+	ArrayList<String> loadChandi();
+
+	ArrayList<Cigarette> loadSearchCigarette(SearchParams searchParams);
 }
