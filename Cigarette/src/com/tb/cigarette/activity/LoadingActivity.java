@@ -1,6 +1,5 @@
 package com.tb.cigarette.activity;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;

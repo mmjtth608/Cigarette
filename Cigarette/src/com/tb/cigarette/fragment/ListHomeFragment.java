@@ -6,6 +6,7 @@ import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcListView;
 import zrc.widget.ZrcListView.OnStartListener;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tb.cigarette.activity.R;
 import com.tb.cigarette.common.ImageLoader;
@@ -37,6 +37,7 @@ import com.tb.cigarette.task.CigaretteLoader;
 import com.tb.cigarette.widget.CircleImageView;
 import com.tb.cigarette.widget.LazyScrollView.OnScrollListener;
 
+@SuppressLint("InflateParams")
 public class ListHomeFragment extends Fragment implements
 		LoaderCallbacks<ArrayList<Cigarette>>, OnScrollListener {
 

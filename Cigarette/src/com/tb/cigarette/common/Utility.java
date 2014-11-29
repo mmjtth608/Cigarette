@@ -45,7 +45,8 @@ public class Utility {
      * 
      * @return
      */
-    public static DisplayImageOptions getUserIconDisplayOption() {
+    @SuppressWarnings("deprecation")
+	public static DisplayImageOptions getUserIconDisplayOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.ic_user_icon)
                 .showImageForEmptyUri(R.drawable.ic_user_icon)
@@ -61,7 +62,8 @@ public class Utility {
      * 
      * @return
      */
-    public static DisplayImageOptions getImageDisplayOption() {
+    @SuppressWarnings("deprecation")
+	public static DisplayImageOptions getImageDisplayOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.ic_image_loading)
                 .showImageForEmptyUri(R.drawable.ic_image_loading)

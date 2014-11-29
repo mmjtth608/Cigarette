@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -429,6 +428,7 @@ public class HomeActivity extends FragmentActivity implements
 
 			@Override
 			public void onSuccess(FrontiaUser.FrontiaUserDetail result) {
+				@SuppressWarnings("unused")
 				String resultStr = "username:" + result.getName() + "\n"
 						+ "birthday:" + result.getBirthday() + "\n" + "city:"
 						+ result.getCity() + "\n" + "province:"

@@ -2,6 +2,7 @@ package com.tb.cigarette.model;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SearchParams implements Serializable {
 	private String key = null;
 	private String pinpai = null;
