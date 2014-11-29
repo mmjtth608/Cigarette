@@ -6,16 +6,19 @@ import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcListView;
 import zrc.widget.ZrcListView.OnStartListener;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import com.tb.cigarette.activity.R;
 import com.tb.cigarette.common.ImageLoader;
+import com.tb.cigarette.common.Util;
 import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.model.SearchParams;
@@ -100,6 +104,23 @@ public class ListHomeFragment extends Fragment implements
 				R.layout.view_searchheader, null);
 		et_key = (EditText) headerView.findViewById(R.id.et_search);
 		btn_cancle = (Button) headerView.findViewById(R.id.ib_search_cancel);
+		btn_cancle.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!TextUtils.isEmpty(et_key.getText().toString().trim())) {
+					searchParams = new SearchParams();
+					searchParams.setKey(et_key.getText().toString().trim());
+					getDataBySearch(searchParams);
+					InputMethodManager imm = (InputMethodManager) getActivity()
+							.getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(et_key.getWindowToken(), 0);
+				} else {
+					Util.t(getActivity(), "请输入关键字");
+				}
+			}
+		});
 		listView.addHeaderView(headerView);
 
 		mAdapter = new MyistAdapter();

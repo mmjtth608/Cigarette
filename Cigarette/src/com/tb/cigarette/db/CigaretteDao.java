@@ -214,7 +214,17 @@ public class CigaretteDao implements CigatetteService {
 		// TODO Auto-generated method stub
 		String sql = "select * from " + DbManager.TABLE_CIGARETTE;
 		if (searchParams.getKey() != null) {
-			sql = "select * from " + DbManager.TABLE_CIGARETTE;
+			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
+					+ FIELD_CHANDI + " like \'%" + searchParams.getKey()
+					+ "%\' or " + FIELD_NAME + " like \'%"
+					+ searchParams.getKey() + "%\' or " + FIELD_DANGCI
+					+ " like \'%" + searchParams.getKey() + "%\' or "
+					+ FIELD_PINPAI + " like \'%" + searchParams.getKey()
+					+ "%\' or " + FIELD_LEIXING + " like \'%"
+					+ searchParams.getKey() + "%\' or " + FIELD_GUIGE
+					+ " like \'%" + searchParams.getKey() + "%\' or "
+					+ FIELD_SHOUJIA + " like \'%" + searchParams.getKey()
+					+ "%\'";
 		} else if (searchParams.getPinpai() != null) {
 			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
 					+ FIELD_PINPAI + " = \'" + searchParams.getPinpai() + "\'";
