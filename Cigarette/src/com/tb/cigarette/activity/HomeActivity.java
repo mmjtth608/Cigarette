@@ -56,6 +56,7 @@ import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.fragment.ListHomeFragment;
 import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.SearchParams;
+import com.tb.cigarette.widget.AlertDialog;
 import com.tb.cigarette.widget.DragLayout;
 import com.tb.cigarette.widget.DragLayout.DragListener;
 import com.tb.cigarette.widget.DragLayout.DragStatus;
@@ -535,5 +536,11 @@ public class HomeActivity extends FragmentActivity implements
 			}
 		}
 		return false;
+	}
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		AlertDialog alertDialog=new AlertDialog(this, "123");
+		alertDialog.show();
 	}
 }

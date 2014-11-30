@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="15152626115@126.com"
+            android:text="版权所有@孟婷婷.浙江理工大学"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
