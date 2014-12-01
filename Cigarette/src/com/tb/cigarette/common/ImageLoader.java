@@ -74,7 +74,7 @@ public class ImageLoader {
 		executorService.submit(new PhotosLoader(p));
 	}
 
-	private Bitmap getBitmap(String url) {
+	public Bitmap getBitmap(String url) {
 		File f = fileCache.getFile(url);
 
 		// 先从文件缓存中查找是否有

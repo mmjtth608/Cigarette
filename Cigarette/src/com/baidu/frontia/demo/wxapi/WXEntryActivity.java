@@ -9,10 +9,10 @@ import com.baidu.frontia.activity.share.FrontiaWeixinShareActivity;
 
 /**
  * @author zhangchi09
- *
+ * 
  */
 public class WXEntryActivity extends FrontiaWeixinShareActivity {
-	
+
 	@Override
 	protected boolean handleIntent() {
 		if (super.handleIntent()) {

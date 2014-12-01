@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcListView;
+import zrc.widget.ZrcListView.OnItemClickListener;
 import zrc.widget.ZrcListView.OnStartListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -35,6 +36,7 @@ import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.model.SearchParams;
 import com.tb.cigarette.task.CigaretteLoader;
 import com.tb.cigarette.widget.CircleImageView;
+import com.tb.cigarette.widget.DetailDialog;
 import com.tb.cigarette.widget.LazyScrollView.OnScrollListener;
 
 @SuppressLint("InflateParams")
@@ -127,6 +129,18 @@ public class ListHomeFragment extends Fragment implements
 		mAdapter = new MyistAdapter();
 		listView.setAdapter(mAdapter);
 		listView.refresh(); // 主动下拉刷新
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(ZrcListView parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				DetailDialog detailDialog = new DetailDialog(getActivity(),
+						cigarettes.get(position));
+				detailDialog.show();
+			}
+		});
 	}
 
 	@Override

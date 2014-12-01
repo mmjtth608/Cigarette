@@ -1,11 +1,11 @@
 /**
-* @Title: AlertDialog.java
-* @Description: TODO
-* @author: Calvinyang
-* @date: Jun 4, 2014 11:26:47 AM
-* Copyright: Copyright (c) 2013
-* @version: 1.0
-*/
+ * @Title: AlertDialog.java
+ * @Description: TODO
+ * @author: Calvinyang
+ * @date: Jun 4, 2014 11:26:47 AM
+ * Copyright: Copyright (c) 2013
+ * @version: 1.0
+ */
 package com.tb.cigarette.widget;
 
 import com.tb.cigarette.activity.R;
@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class AlertDialog extends Dialog {
 	private Context context;
 	private String hint;
-	
+
 	/**
 	 * @param context
 	 */
@@ -43,7 +43,7 @@ public class AlertDialog extends Dialog {
 		this(context);
 		this.hint = hint;
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,18 +51,20 @@ public class AlertDialog extends Dialog {
 		Window window = getWindow();
 		LayoutParams params = window.getAttributes();
 		params.gravity = Gravity.CENTER;
-		params.width = (int) (CommonUtils.getWidth(context) - 100 * CommonUtils.getDensity(context));
+		params.width = (int) (CommonUtils.getWidth(context) - 100 * CommonUtils
+				.getDensity(context));
 		params.height = (int) (CommonUtils.getDensity(context) * (hint.length() / 12 * 30 + 120));
 		window.setAttributes(params);
 		TextView tv = (TextView) findViewById(R.id.alert_content);
 		tv.setText(hint);
 		setCancelable(false);
-		findViewById(R.id.alert_ok).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View paramView) {
-				dismiss();
-			}
-		});
+		findViewById(R.id.alert_ok).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View paramView) {
+						dismiss();
+					}
+				});
 	}
 }

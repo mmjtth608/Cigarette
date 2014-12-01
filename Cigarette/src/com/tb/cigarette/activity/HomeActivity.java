@@ -56,7 +56,7 @@ import com.tb.cigarette.common.Utility;
 import com.tb.cigarette.fragment.ListHomeFragment;
 import com.tb.cigarette.manager.CigaretteManager;
 import com.tb.cigarette.model.SearchParams;
-import com.tb.cigarette.widget.AlertDialog;
+import com.tb.cigarette.widget.ConfirmDialog;
 import com.tb.cigarette.widget.DragLayout;
 import com.tb.cigarette.widget.DragLayout.DragListener;
 import com.tb.cigarette.widget.DragLayout.DragStatus;
@@ -89,6 +89,7 @@ public class HomeActivity extends FragmentActivity implements
 	private CigaretteManager mCigaretteManager = null;
 	private ArrayAdapter<String> mAdapter;
 	private SearchParams searchParams = null;
+	private ConfirmDialog confirmDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -537,10 +538,28 @@ public class HomeActivity extends FragmentActivity implements
 		}
 		return false;
 	}
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		AlertDialog alertDialog=new AlertDialog(this, "123");
-		alertDialog.show();
+		// AlertDialog alertDialog=new AlertDialog(this, "确定要退出吗");
+		// alertDialog.show();
+		confirmDialog = new ConfirmDialog(this, "确定要退出吗");
+		confirmDialog.show();
+		confirmDialog.setListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		}, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				confirmDialog.dismiss();
+			}
+		});
 	}
 }

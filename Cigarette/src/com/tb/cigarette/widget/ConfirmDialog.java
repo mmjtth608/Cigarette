@@ -26,6 +26,8 @@ import android.widget.TextView;
 public class ConfirmDialog extends Dialog {
 	private Context context;
 	private String hint;
+	private TextView confirm_cancel;
+	private TextView confirm_ok;
 
 	/**
 	 * @param context
@@ -58,22 +60,22 @@ public class ConfirmDialog extends Dialog {
 		TextView tv = (TextView) findViewById(R.id.confirm_content);
 		tv.setText(hint);
 		setCancelable(false);
-		findViewById(R.id.confirm_cancel).setOnClickListener(
-				new View.OnClickListener() {
+		confirm_cancel = (TextView) findViewById(R.id.confirm_cancel);
+		confirm_ok = (TextView) findViewById(R.id.confirm_ok);
+		confirm_cancel.setOnClickListener(new View.OnClickListener() {
 
-					@Override
-					public void onClick(View paramView) {
-						dismiss();
-					}
-				});
-		findViewById(R.id.confirm_ok).setOnClickListener(
-				new View.OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+				dismiss();
+			}
+		});
+		confirm_ok.setOnClickListener(new View.OnClickListener() {
 
-					@Override
-					public void onClick(View paramView) {
-						dismiss();
-					}
-				});
+			@Override
+			public void onClick(View paramView) {
+				dismiss();
+			}
+		});
 	}
 
 	/**
@@ -86,10 +88,10 @@ public class ConfirmDialog extends Dialog {
 	public void setListener(android.view.View.OnClickListener yesListener,
 			android.view.View.OnClickListener noListener) {
 		if (yesListener != null) {
-			findViewById(R.id.confirm_ok).setOnClickListener(yesListener);
+			confirm_ok.setOnClickListener(yesListener);
 		}
 		if (noListener != null) {
-			findViewById(R.id.confirm_cancel).setOnClickListener(noListener);
+			confirm_cancel.setOnClickListener(noListener);
 		}
 	}
 
@@ -102,10 +104,10 @@ public class ConfirmDialog extends Dialog {
 	 */
 	public void setButton(String yes, String no) {
 		if (yes != null) {
-			((TextView) findViewById(R.id.confirm_ok)).setText(yes);
+			confirm_ok.setText(yes);
 		}
 		if (no != null) {
-			((TextView) findViewById(R.id.confirm_cancel)).setText(no);
+			confirm_cancel.setText(no);
 		}
 	}
 }

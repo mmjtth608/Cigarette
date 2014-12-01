@@ -41,37 +41,38 @@ public class Utility {
 			return "";
 		}
 	}
-	/**
-     * 
-     * @return
-     */
-    @SuppressWarnings("deprecation")
-	public static DisplayImageOptions getUserIconDisplayOption() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.ic_user_icon)
-                .showImageForEmptyUri(R.drawable.ic_user_icon)
-                .showImageOnFail(R.drawable.ic_user_icon)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                // .cacheInMemory()
-                .cacheOnDisc().displayer(new SimpleBitmapDisplayer())
-                .imageScaleType(ImageScaleType.EXACTLY).build();
-        return options;
-    }
 
-    /**
-     * 
-     * @return
-     */
-    @SuppressWarnings("deprecation")
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static DisplayImageOptions getUserIconDisplayOption() {
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.ic_user_icon)
+				.showImageForEmptyUri(R.drawable.ic_user_icon)
+				.showImageOnFail(R.drawable.ic_user_icon)
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				// .cacheInMemory()
+				.cacheOnDisc().displayer(new SimpleBitmapDisplayer())
+				.imageScaleType(ImageScaleType.EXACTLY).build();
+		return options;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
 	public static DisplayImageOptions getImageDisplayOption() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.ic_image_loading)
-                .showImageForEmptyUri(R.drawable.ic_image_loading)
-                .showImageOnFail(R.drawable.ic_image_loading)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                // .cacheInMemory()
-                .cacheOnDisc().displayer(new SimpleBitmapDisplayer())
-                .imageScaleType(ImageScaleType.EXACTLY).build();
-        return options;
-    }
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.ic_image_loading)
+				.showImageForEmptyUri(R.drawable.ic_image_loading)
+				.showImageOnFail(R.drawable.ic_image_loading)
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				// .cacheInMemory()
+				.cacheOnDisc().displayer(new SimpleBitmapDisplayer())
+				.imageScaleType(ImageScaleType.EXACTLY).build();
+		return options;
+	}
 }

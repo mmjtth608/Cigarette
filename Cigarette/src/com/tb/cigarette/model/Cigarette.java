@@ -16,7 +16,7 @@ public class Cigarette {
 	private int pinpainum;// 品牌名次
 	private int chandinum;// 产地名次
 	private int dangcinum;// 档次名次
-	private int share=0;//0：普通 1：收藏
+	private int share = 0;// 0：普通 1：收藏
 
 	public int getId() {
 		return id;
