@@ -58,12 +58,12 @@ public class LoadingActivity extends FragmentActivity implements
 		mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
 				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
 				-3.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-		mShowAction.setDuration(1000);
+		mShowAction.setDuration(3000);
 		mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
 				0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
 				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
 				-3.0f);
-		mHiddenAction.setDuration(1000);
+		mHiddenAction.setDuration(3000);
 	}
 
 	private void bindEvents() {
