@@ -172,7 +172,7 @@ public class HomeActivity extends FragmentActivity implements
 	private void initActionBar() {
 		// TODO Auto-generated method stub
 		actionBar = getActionBar();
-		actionBar.setTitle("浙江中烟产品展示平台");
+		actionBar.setTitle("香烟小助手");
 		actionBar.setIcon(R.drawable.icon_menu);
 		actionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.actionbar_background));
@@ -345,6 +345,13 @@ public class HomeActivity extends FragmentActivity implements
 			((ListHomeFragment) getSupportFragmentManager().findFragmentByTag(
 					ListHomeFragment.class.getSimpleName()))
 					.getDataBySearch(null);
+			break;
+		case R.id.action_myshare:
+			searchParams.clearParams();
+			searchParams.setShare(1);
+			((ListHomeFragment) (getSupportFragmentManager()
+					.findFragmentByTag(ListHomeFragment.class.getSimpleName())))
+					.getDataBySearch(searchParams);
 			break;
 		default:
 			break;

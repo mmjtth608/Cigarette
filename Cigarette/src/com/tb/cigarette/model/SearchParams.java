@@ -8,6 +8,7 @@ public class SearchParams implements Serializable {
 	private String pinpai = null;
 	private String dangci = null;
 	private String chandi = null;
+	private int share = 100;
 
 	public String getKey() {
 		return key;
@@ -39,6 +40,14 @@ public class SearchParams implements Serializable {
 
 	public void setChandi(String chandi) {
 		this.chandi = chandi;
+	}
+
+	public int getShare() {
+		return share;
+	}
+
+	public void setShare(int share) {
+		this.share = share;
 	}
 
 	public void clearParams() {

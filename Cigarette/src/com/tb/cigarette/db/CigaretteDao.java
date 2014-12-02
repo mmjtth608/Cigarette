@@ -234,6 +234,9 @@ public class CigaretteDao implements CigatetteService {
 		} else if (searchParams.getChandi() != null) {
 			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
 					+ FIELD_CHANDI + " = \'" + searchParams.getChandi() + "\'";
+		} else if (searchParams.getShare() != 100) {
+			sql = "select * from " + DbManager.TABLE_CIGARETTE + " where "
+					+ FIELD_SHARE + " = \'" + searchParams.getShare() + "\'";
 		}
 		ArrayList<Cigarette> cigarettes = new ArrayList<Cigarette>();
 		SQLiteDatabase db = DbManager.getDbManager(mContext).getDb();

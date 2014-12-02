@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_myshare"
+        android:icon="@drawable/icon_share"
+        android:showAsAction="ifRoom|withText"
+        android:title="我的收藏">
+    </item>
+    <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/ic_menu_refresh"
         android:showAsAction="ifRoom|withText"
