@@ -1,7 +1,12 @@
 package com.tb.cigarette.activity;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import com.tb.cigarette.manager.CigaretteManager;
+import com.tb.cigarette.model.Cigarette;
+import com.tb.cigarette.model.SearchParams;
 
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
@@ -16,8 +21,10 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.Utils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -25,11 +32,10 @@ import android.view.MenuItem;
 
 @SuppressLint("NewApi")
 public class ChartsActivity extends FragmentActivity {
-	public final static String[] months = new String[] { "Jan", "Feb", "Mar",
-			"Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", };
+	public String[] months;
 
-	public final static String[] days = new String[] { "Mon", "Tue", "Wen",
-			"Thu", "Fri", "Sat", "Sun", };
+	public final static String[] days = new String[] { "顶级烟", "高档烟", "中档烟",
+			"普通烟" };
 
 	private LineChartView chartTop;
 	private ColumnChartView chartBottom;
@@ -37,22 +43,33 @@ public class ChartsActivity extends FragmentActivity {
 	private LineChartData lineData;
 	private ColumnChartData columnData;
 	private ActionBar actionBar = null;
+	private CigaretteManager mCigaretteManager = null;
+	private List<Integer> chandiIntegers = new LinkedList<Integer>();
+	private List<List<Cigarette>> cigarettes = new LinkedList<List<Cigarette>>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_line_column_dependency);
+		mCigaretteManager = CigaretteManager.getInstance(this);
+		List<String> s = mCigaretteManager.loadChandi();
+		months = new String[s.size()];
+		for (int i = 0; i < s.size(); i++) {
+			List<Cigarette> mcigarettes = new LinkedList<Cigarette>();
+			months[i] = s.get(i);
+			SearchParams searchParams = new SearchParams();
+			searchParams.setChandi(s.get(i));
+			mcigarettes = mCigaretteManager.loadSearchCigarette(searchParams);
+			cigarettes.add(mcigarettes);
+			chandiIntegers.add(mcigarettes.size());
+		}
 		initActionBar();
 		// *** TOP LINE CHART ***
 		chartTop = (LineChartView) findViewById(R.id.chart_top);
-
 		// Generate and set data for line chart
 		generateInitialLineData();
-
 		// *** BOTTOM COLUMN CHART ***
-
 		chartBottom = (ColumnChartView) findViewById(R.id.chart_bottom);
-
 		generateColumnData();
 
 	}
@@ -60,7 +77,8 @@ public class ChartsActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		return super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.menu_charts, menu);
+		return true;
 	}
 
 	@Override
@@ -70,6 +88,11 @@ public class ChartsActivity extends FragmentActivity {
 			finish();
 			overridePendingTransition(R.anim.animation_left_in,
 					R.anim.animation_right_out);
+			break;
+		case R.id.action_pie:
+			Intent intent = new Intent();
+			intent.setClass(ChartsActivity.this, ChartsActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;
@@ -99,19 +122,23 @@ public class ChartsActivity extends FragmentActivity {
 
 			values = new ArrayList<ColumnValue>();
 			for (int j = 0; j < numSubcolumns; ++j) {
-				values.add(new ColumnValue((float) Math.random() * 50f + 5,
-						Utils.pickColor()));
+				// values.add(new ColumnValue((float) Math.random() * 50f + 5,
+				// Utils.pickColor()));
+				values.add(new ColumnValue((float) chandiIntegers.get(i), Utils
+						.pickColor()));
 				axisValues.add(new AxisValue(i, months[i].toCharArray()));
 			}
-
 			columns.add(new Column(values).setHasLabelsOnlyForSelected(true));
+			columns.get(i).setHasLabels(true);
 		}
 
 		columnData = new ColumnChartData(columns);
-
-		columnData.setAxisXBottom(new Axis(axisValues).setHasLines(true));
-		columnData.setAxisYLeft(new Axis().setHasLines(true)
-				.setMaxLabelChars(2));
+		Axis axisX = new Axis(axisValues).setHasLines(true);
+		Axis axisY = new Axis().setHasLines(true).setMaxLabelChars(3);
+		axisX.setTextColor(getResources().getColor(R.color.black));
+		axisY.setTextColor(getResources().getColor(R.color.black));
+		columnData.setAxisXBottom(axisX);
+		columnData.setAxisYLeft(axisY);
 
 		chartBottom.setColumnChartData(columnData);
 
@@ -120,8 +147,11 @@ public class ChartsActivity extends FragmentActivity {
 
 		// Set selection mode to keep selected month column highlighted.
 		chartBottom.setValueSelectionEnabled(true);
-
+		Viewport v = new Viewport(0, getMax(chandiIntegers), months.length, 0);
+		// chartBottom.setMaximumViewport(v);
+		// chartBottom.setCurrentViewport(v, false);
 		chartBottom.setZoomType(ZoomType.HORIZONTAL);
+		chartBottom.setZoomLevel(0, 0, months.length / 8, false);
 
 		// chartBottom.setOnClickListener(new View.OnClickListener() {
 		//
@@ -142,7 +172,7 @@ public class ChartsActivity extends FragmentActivity {
 	 * equals 0. That will change when user will select value on column chart.
 	 */
 	private void generateInitialLineData() {
-		int numValues = 7;
+		int numValues = days.length;
 
 		List<AxisValue> axisValues = new ArrayList<AxisValue>();
 		List<PointValue> values = new ArrayList<PointValue>();
@@ -160,8 +190,12 @@ public class ChartsActivity extends FragmentActivity {
 		lines.add(line);
 
 		lineData = new LineChartData(lines);
-		lineData.setAxisXBottom(new Axis(axisValues).setHasLines(true));
-		lineData.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(3));
+		Axis axisX = new Axis(axisValues).setHasLines(true);
+		Axis axisY = new Axis().setHasLines(true).setMaxLabelChars(3);
+		axisX.setTextColor(getResources().getColor(R.color.black));
+		axisY.setTextColor(getResources().getColor(R.color.black));
+		lineData.setAxisXBottom(axisX);
+		lineData.setAxisYLeft(axisY);
 
 		chartTop.setLineChartData(lineData);
 
@@ -170,25 +204,50 @@ public class ChartsActivity extends FragmentActivity {
 
 		// And set initial max viewport and current viewport- remember to set
 		// viewports after data.
-		Viewport v = new Viewport(0, 110, 6, 0);
+		Viewport v = new Viewport(0, 80, days.length, 0);
 		chartTop.setMaximumViewport(v);
 		chartTop.setCurrentViewport(v, false);
 
 		chartTop.setZoomType(ZoomType.HORIZONTAL);
 	}
 
-	private void generateLineData(int color, float range) {
+	private void generateLineData(int color, float range,
+			List<Cigarette> cigarettes) {
 		// Cancel last animation if not finished.
+
+		List<Cigarette> dj = new LinkedList<Cigarette>();
+		List<Cigarette> gd = new LinkedList<Cigarette>();
+		List<Cigarette> zd = new LinkedList<Cigarette>();
+		List<Cigarette> pt = new LinkedList<Cigarette>();
+		for (Cigarette cigarette : cigarettes) {
+			if (cigarette.getDangci().contains("顶级")) {
+				dj.add(cigarette);
+			} else if (cigarette.getDangci().contains("高档")) {
+				gd.add(cigarette);
+			} else if (cigarette.getDangci().contains("中档")) {
+				zd.add(cigarette);
+			} else if (cigarette.getDangci().contains("普通")) {
+				pt.add(cigarette);
+			}
+		}
+
 		chartTop.cancelDataAnimation();
 
 		// Modify data targets
 		Line line = lineData.getLines().get(0);// For this example there is
 												// always only one line.
 		line.setColor(color);
-		for (PointValue value : line.getValues()) {
-			// Change target only for Y value.
-			value.setTarget(value.getX(), (float) Math.random() * range);
-		}
+		// for (PointValue value : line.getValues()) {
+		// Change target only for Y value.
+		line.getValues().get(0)
+				.setTarget(line.getValues().get(0).getX(), dj.size());
+		line.getValues().get(1)
+				.setTarget(line.getValues().get(1).getX(), gd.size());
+		line.getValues().get(2)
+				.setTarget(line.getValues().get(2).getX(), zd.size());
+		line.getValues().get(3)
+				.setTarget(line.getValues().get(3).getX(), pt.size());
+		// }
 
 		// Start new data animation with 300ms duration;
 		chartTop.startDataAnimation(300);
@@ -200,15 +259,34 @@ public class ChartsActivity extends FragmentActivity {
 		@Override
 		public void onValueTouched(int selectedLine, int selectedValue,
 				ColumnValue value) {
-			generateLineData(value.getColor(), 100);
+			generateLineData(value.getColor(), 100,
+					cigarettes.get(selectedLine));
 
 		}
 
 		@Override
 		public void onNothingTouched() {
 
-			generateLineData(Utils.COLOR_GREEN, 0);
+		}
+	}
 
+	/**
+	 * 得到最大值
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public Integer getMax(List<Integer> list) {
+		int max = 0;
+		if (list == null || list.size() == 0) {
+			return max;
+		} else {
+			for (int m : list) {
+				if (m > max) {
+					max = m;
+				}
+			}
+			return max;
 		}
 	}
 }

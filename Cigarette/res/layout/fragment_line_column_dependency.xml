@@ -18,6 +18,14 @@
         android:layout_weight="1" >
     </lecho.lib.hellocharts.view.LineChartView>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="产地各档次产烟量预览\n（点击下面各个柱状图查看各省份详细）"
+        android:textColor="@color/black" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -32,5 +40,14 @@
         android:layout_margin="10dp"
         android:layout_weight="1" >
     </lecho.lib.hellocharts.view.ColumnChartView>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="各省份产烟量预览\n（柱状图可以左右滑动来查看更多香烟产地）"
+        android:textColor="@color/black" />
 
 </LinearLayout>

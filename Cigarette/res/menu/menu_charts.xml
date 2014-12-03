@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_pie"
+        android:icon="@drawable/icon_pie"
+        android:showAsAction="ifRoom|withText"
+        android:title="饼状图">
+    </item>
+
+</menu>
