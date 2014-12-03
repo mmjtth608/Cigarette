@@ -8,6 +8,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,6 +78,7 @@ public class HomeActivity extends FragmentActivity implements
 	private FrontiaSocialShareContent mImageContent = new FrontiaSocialShareContent();
 	private FrontiaAuthorization mAuthorization;
 	private TextView tv_name;
+	private TextView tv_mail;
 
 	protected ImageLoader imageLoader;
 	private DisplayImageOptions options;
@@ -214,6 +216,7 @@ public class HomeActivity extends FragmentActivity implements
 
 	private void initView() {
 		tv_name = (TextView) findViewById(R.id.tv_name);
+		tv_mail = (TextView) findViewById(R.id.tv_mail);
 		segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
 		segmentText.setOnCheckedChangeListener(this);
 		tv_name.setOnClickListener(new OnClickListener() {
@@ -274,6 +277,18 @@ public class HomeActivity extends FragmentActivity implements
 		// dl.open();
 		// }
 		// });
+		tv_mail.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(HomeActivity.this, ChartsActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.animation_right_in,
+						R.anim.animation_left_out);
+			}
+		});
 	}
 
 	@Override

@@ -32,6 +32,10 @@
             android:label="@null"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.tb.cigarette.activity.ChartsActivity"
+            android:label="@null" >
+        </activity>
 
         <receiver
             android:name="com.baidu.android.pushservice.PushServiceReceiver"

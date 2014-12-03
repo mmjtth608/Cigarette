@@ -41,7 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="版权所有@孟婷婷.浙江理工大学"
+            android:drawableLeft="@drawable/icon_charts"
+            android:gravity="center_vertical"
+            android:text="统计\t\t版权所有@孟婷婷.浙江理工大学"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
