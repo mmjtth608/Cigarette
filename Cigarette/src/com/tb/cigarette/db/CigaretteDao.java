@@ -123,6 +123,7 @@ public class CigaretteDao implements CigatetteService {
 			Cigarette mCigarette = getFromCursor(mCursor);
 			cigarettes.add(mCigarette);
 		}
+		mCursor.close();
 		return cigarettes;
 	}
 
@@ -178,6 +179,7 @@ public class CigaretteDao implements CigatetteService {
 			cigarettes.add(mCursor.getString(mCursor
 					.getColumnIndex(FIELD_PINPAI)));
 		}
+		mCursor.close();
 		return cigarettes;
 	}
 
@@ -192,6 +194,7 @@ public class CigaretteDao implements CigatetteService {
 			cigarettes.add(mCursor.getString(mCursor
 					.getColumnIndex(FIELD_DANGCI)));
 		}
+		mCursor.close();
 		return cigarettes;
 	}
 
@@ -206,6 +209,7 @@ public class CigaretteDao implements CigatetteService {
 			cigarettes.add(mCursor.getString(mCursor
 					.getColumnIndex(FIELD_CHANDI)));
 		}
+		mCursor.close();
 		return cigarettes;
 	}
 
@@ -245,6 +249,7 @@ public class CigaretteDao implements CigatetteService {
 			Cigarette mCigarette = getFromCursor(mCursor);
 			cigarettes.add(mCigarette);
 		}
+		mCursor.close();
 		return cigarettes;
 	}
 
