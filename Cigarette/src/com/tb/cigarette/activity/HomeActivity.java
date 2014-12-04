@@ -282,11 +282,13 @@ public class HomeActivity extends FragmentActivity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(HomeActivity.this, ChartsActivity.class);
-				startActivity(intent);
-				overridePendingTransition(R.anim.animation_right_in,
-						R.anim.animation_left_out);
+				dl.close();
+				searchParams.clearParams();
+				searchParams.setShare(1);
+				((ListHomeFragment) (getSupportFragmentManager()
+						.findFragmentByTag(ListHomeFragment.class
+								.getSimpleName())))
+						.getDataBySearch(searchParams);
 			}
 		});
 	}
@@ -362,11 +364,11 @@ public class HomeActivity extends FragmentActivity implements
 					.getDataBySearch(null);
 			break;
 		case R.id.action_myshare:
-			searchParams.clearParams();
-			searchParams.setShare(1);
-			((ListHomeFragment) (getSupportFragmentManager()
-					.findFragmentByTag(ListHomeFragment.class.getSimpleName())))
-					.getDataBySearch(searchParams);
+			Intent intent = new Intent();
+			intent.setClass(HomeActivity.this, ChartsActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.animation_right_in,
+					R.anim.animation_left_out);
 			break;
 		default:
 			break;

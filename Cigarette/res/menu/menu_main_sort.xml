@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/action_myshare"
-        android:icon="@drawable/icon_share"
+        android:icon="@drawable/icon_charts"
         android:showAsAction="ifRoom|withText"
         android:title="我的收藏">
     </item>

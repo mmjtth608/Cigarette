@@ -9,6 +9,7 @@ import com.tb.cigarette.model.Cigarette;
 import com.tb.cigarette.model.SearchParams;
 
 import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.ArcValue;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
@@ -19,6 +20,7 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.Utils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.PieChartView;
+import lecho.lib.hellocharts.view.PieChartView.PieChartOnValueTouchListener;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -29,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class ChartsPieActivity extends FragmentActivity {
@@ -41,8 +44,14 @@ public class ChartsPieActivity extends FragmentActivity {
 	private ActionBar actionBar;
 	private CigaretteManager mCigaretteManager = null;
 	private List<Integer> chandiIntegers = new LinkedList<Integer>();
+	private List<Integer> lIntegers = new LinkedList<Integer>();
+	private List<Integer> rIntegers = new LinkedList<Integer>();
 	private List<List<Cigarette>> cigarettes = new LinkedList<List<Cigarette>>();
+	private List<List<Cigarette>> cigarettesl = new LinkedList<List<Cigarette>>();
+	private List<List<Cigarette>> cigarettesr = new LinkedList<List<Cigarette>>();
 	public String[] months;
+	List<String> sl;
+	List<String> sr;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -52,6 +61,8 @@ public class ChartsPieActivity extends FragmentActivity {
 		initActionBar();
 		mCigaretteManager = CigaretteManager.getInstance(this);
 		chartBottom = (ColumnChartView) findViewById(R.id.chart_bottom);
+		chartLeft = (PieChartView) findViewById(R.id.chart_left);
+		chartRight = (PieChartView) findViewById(R.id.chart_right);
 		List<String> s = mCigaretteManager.loadPinpai();
 		months = new String[s.size()];
 		for (int i = 0; i < s.size(); i++) {
@@ -68,8 +79,66 @@ public class ChartsPieActivity extends FragmentActivity {
 	}
 
 	private void generatePieata() {
-		// TODO Auto-generated method stub
 
+		sl = mCigaretteManager.loadDangci();
+		sr = mCigaretteManager.loadChandi();
+		List<List<Cigarette>> cl = new LinkedList<List<Cigarette>>();
+		List<List<Cigarette>> cr = new LinkedList<List<Cigarette>>();
+		cigarettesl = cl;
+		cigarettesl = cr;
+		for (int i = 0; i < sl.size(); i++) {
+			List<Cigarette> c = new LinkedList<Cigarette>();
+			SearchParams searchParams = new SearchParams();
+			searchParams.setDangci(sl.get(i));
+			c = mCigaretteManager.loadSearchCigarette(searchParams);
+			cl.add(c);
+		}
+		for (int i = 0; i < sr.size(); i++) {
+			List<Cigarette> c = new LinkedList<Cigarette>();
+			SearchParams searchParams = new SearchParams();
+			searchParams.setChandi(sr.get(i));
+			c = mCigaretteManager.loadSearchCigarette(searchParams);
+			cr.add(c);
+		}
+
+		List<ArcValue> valuesl = new ArrayList<ArcValue>();
+		for (int i = 0; i < cl.size(); ++i) {
+			ArcValue arcValue = new ArcValue(cl.get(i).size(),
+					Utils.pickColor());
+			valuesl.add(arcValue);
+		}
+
+		List<ArcValue> valuesr = new ArrayList<ArcValue>();
+		for (int i = 0; i < cr.size(); ++i) {
+			ArcValue arcValue = new ArcValue(cr.get(i).size(),
+					Utils.pickColor());
+			valuesr.add(arcValue);
+		}
+
+		pieDataL = new PieChartData(valuesl);
+		pieDataL.setHasLabels(true);
+		pieDataL.setHasLabelsOnlyForSelected(false);
+		pieDataL.setHasLabelsOutside(true);
+		pieDataL.setHasCenterCircle(true);
+		pieDataL.setCenterText1("档次");
+		pieDataL.setCenterText1FontSize(15);
+
+		pieDataR = new PieChartData(valuesr);
+		pieDataR.setHasLabels(true);
+		pieDataR.setHasLabelsOnlyForSelected(false);
+		pieDataR.setHasLabelsOutside(true);
+		pieDataR.setHasCenterCircle(false);
+		pieDataR.setCenterText1("产地");
+		pieDataR.setCenterText1FontSize(15);
+
+		chartLeft.setPieChartData(pieDataL);
+		chartRight.setPieChartData(pieDataR);
+		chartRight.setValueSelectionEnabled(true);
+		chartRight.setCircleFillRatio(0.7f);
+		chartLeft.setValueSelectionEnabled(true);
+		chartLeft.setCircleFillRatio(0.7f);
+		chartLeft.setOnValueTouchListener(new PieValueTouchListenerl());
+		chartRight.setOnValueTouchListener(new PieValueTouchListenerr());
 	}
 
 	private void generateColumnData() {
@@ -138,7 +207,6 @@ public class ChartsPieActivity extends FragmentActivity {
 				ColumnValue value) {
 			// generateLineData(value.getColor(), 100,
 			// cigarettes.get(selectedLine));
-
 		}
 
 		@Override
@@ -176,5 +244,37 @@ public class ChartsPieActivity extends FragmentActivity {
 		actionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.actionbar_background));
 		actionBar.setHomeButtonEnabled(true);
+	}
+
+	private class PieValueTouchListenerl implements
+			PieChartOnValueTouchListener {
+
+		@Override
+		public void onValueTouched(int selectedArc, ArcValue value) {
+			Toast.makeText(ChartsPieActivity.this, sl.get(selectedArc),
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onNothingTouched() {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	private class PieValueTouchListenerr implements
+			PieChartOnValueTouchListener {
+
+		@Override
+		public void onValueTouched(int selectedArc, ArcValue value) {
+			Toast.makeText(ChartsPieActivity.this, sr.get(selectedArc),
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onNothingTouched() {
+			// TODO Auto-generated method stub
+
+		}
 	}
 }
