@@ -36,6 +36,10 @@
             android:name="com.tb.cigarette.activity.ChartsActivity"
             android:label="@null" >
         </activity>
+        <activity
+            android:name="com.tb.cigarette.activity.ChartsPieActivity"
+            android:label="@null" >
+        </activity>
 
         <receiver
             android:name="com.baidu.android.pushservice.PushServiceReceiver"

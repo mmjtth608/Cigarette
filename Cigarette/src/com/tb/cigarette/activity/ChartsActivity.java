@@ -91,7 +91,7 @@ public class ChartsActivity extends FragmentActivity {
 			break;
 		case R.id.action_pie:
 			Intent intent = new Intent();
-			intent.setClass(ChartsActivity.this, ChartsActivity.class);
+			intent.setClass(ChartsActivity.this, ChartsPieActivity.class);
 			startActivity(intent);
 			break;
 		default:
@@ -276,7 +276,7 @@ public class ChartsActivity extends FragmentActivity {
 	 * @param list
 	 * @return
 	 */
-	public Integer getMax(List<Integer> list) {
+	public static Integer getMax(List<Integer> list) {
 		int max = 0;
 		if (list == null || list.size() == 0) {
 			return max;
