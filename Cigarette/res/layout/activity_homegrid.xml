@@ -2,7 +2,7 @@
     android:id="@+id/dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg" >
+    android:background="@drawable/sa" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:layout_alignParentBottom="true"
             android:drawableLeft="@drawable/icon_share"
             android:gravity="center_vertical"
-            android:text="我的收藏\t\t版权所有@孟婷婷.浙江理工大学"
+            android:text="我的收藏"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
